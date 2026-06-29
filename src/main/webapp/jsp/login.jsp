@@ -11,7 +11,7 @@
     </head>
     <body hx-boost="true">
         <jsp:include page="includes/nav.jsp" />
-        <main>
+        <main class="home">
             <h1>Scripty</h1>
             <c:if test="${param.login_error == 1}">
                 <p>Incorrect Username or Password.</p>

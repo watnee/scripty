@@ -2,6 +2,10 @@ header {
     border-bottom: none;
 }
 
+main.home {
+    text-align: center;
+}
+
 .nowrap {
     white-space: nowrap;
 }

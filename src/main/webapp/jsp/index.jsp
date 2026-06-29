@@ -13,7 +13,7 @@
         <jsp:include page="includes/nav.jsp">
             <jsp:param name="page" value="index" />
         </jsp:include>
-        <main>
+        <main class="home">
             <h1>Scripty</h1>
             <c:if test="${pageContext.request.userPrincipal.name == null}">
                 <p><a href="${pageContext.request.contextPath}/login" role="button">Login</a></p>
