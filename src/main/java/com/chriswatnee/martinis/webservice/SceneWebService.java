@@ -9,6 +9,7 @@ import com.chriswatnee.martinis.commandmodel.scene.createscene.CreateSceneComman
 import com.chriswatnee.martinis.commandmodel.scene.createscenebelow.CreateSceneBelowCommandModel;
 import com.chriswatnee.martinis.commandmodel.scene.editscene.EditSceneCommandModel;
 import com.chriswatnee.martinis.dto.Scene;
+import com.chriswatnee.martinis.viewmodel.scene.allscenes.AllScenesViewModel;
 import com.chriswatnee.martinis.viewmodel.scene.createscene.CreateSceneViewModel;
 import com.chriswatnee.martinis.viewmodel.scene.createscenebelow.CreateSceneBelowViewModel;
 import com.chriswatnee.martinis.viewmodel.scene.editscene.EditSceneViewModel;
@@ -21,6 +22,7 @@ import com.chriswatnee.martinis.viewmodel.scene.sceneprofile.SceneProfileViewMod
 public interface SceneWebService {
     
     public SceneProfileViewModel getSceneProfileViewModel(Integer id);
+    public AllScenesViewModel getAllScenesViewModel(Integer projectId);
 
     public CreateSceneViewModel getCreateSceneViewModel(Integer projectId);
     public CreateSceneBelowViewModel getCreateSceneBelowViewModel(Integer id);

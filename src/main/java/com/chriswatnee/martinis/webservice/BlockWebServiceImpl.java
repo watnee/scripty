@@ -24,6 +24,8 @@ import com.chriswatnee.martinis.viewmodel.block.editblock.EditPersonViewModel;
 import com.chriswatnee.martinis.viewmodel.scene.sceneprofile.BlockViewModel;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.inject.Inject;
 
 /**
@@ -139,27 +141,38 @@ public class BlockWebServiceImpl implements BlockWebService {
 
         // Instantiate
         Block block = new Block();
-        
+
         // Look up stuff
         Person person = null;
         if (createBlockCommandModel.getPersonId() != null) {
             person = personService.read(createBlockCommandModel.getPersonId());
         }
-        
+
         Scene scene = sceneService.read(createBlockCommandModel.getSceneId());
-        
+
+        String content = createBlockCommandModel.getContent();
+
+        if (person == null) {
+            String characterName = extractCharacterName(content);
+            if (characterName != null) {
+                Project project = projectService.getProjectByScene(scene);
+                person = findOrCreatePerson(characterName, project);
+                content = stripCharacterName(content);
+            }
+        }
+
         // Put stuff
-        block.setContent(createBlockCommandModel.getContent());
-        
+        block.setContent(content);
+
         if (person != null) {
             block.setPerson(person);
         }
-        
+
         block.setScene(scene);
 
         // Save stuff
         block = blockService.create(block);
-        
+
         return block;
     }
 
@@ -168,30 +181,41 @@ public class BlockWebServiceImpl implements BlockWebService {
 
         // Instantiate
         Block block = new Block();
-        
+
         // Look up stuff
         Block existingBlock = blockService.read(createBlockBelowCommandModel.getId());
-        
+
         Person person = null;
         if (createBlockBelowCommandModel.getPersonId() != null) {
             person = personService.read(createBlockBelowCommandModel.getPersonId());
         }
-        
+
         Scene scene = sceneService.read(existingBlock.getScene().getId());
-        
+
+        String content = createBlockBelowCommandModel.getContent();
+
+        if (person == null) {
+            String characterName = extractCharacterName(content);
+            if (characterName != null) {
+                Project project = projectService.getProjectByScene(scene);
+                person = findOrCreatePerson(characterName, project);
+                content = stripCharacterName(content);
+            }
+        }
+
         // Put stuff
         block.setOrder(existingBlock.getOrder());
-        block.setContent(createBlockBelowCommandModel.getContent());
-        
+        block.setContent(content);
+
         if (person != null) {
             block.setPerson(person);
         }
-        
+
         block.setScene(scene);
 
         // Save stuff
         block = blockService.createBelow(block);
-        
+
         return block;
     }
 
@@ -200,16 +224,30 @@ public class BlockWebServiceImpl implements BlockWebService {
 
         // Instantiate
         Block block = blockService.read(editBlockCommandModel.getId());
-        
+
         // Look up stuff
-        Person person = personService.read(editBlockCommandModel.getPersonId());
+        Person person = null;
+        if (editBlockCommandModel.getPersonId() != null) {
+            person = personService.read(editBlockCommandModel.getPersonId());
+        }
         Scene scene = sceneService.read(editBlockCommandModel.getSceneId());
 
+        String content = editBlockCommandModel.getContent();
+
+        if (person == null) {
+            String characterName = extractCharacterName(content);
+            if (characterName != null) {
+                Project project = projectService.getProjectByScene(scene);
+                person = findOrCreatePerson(characterName, project);
+                content = stripCharacterName(content);
+            }
+        }
+
         // Put stuff
-        block.setContent(editBlockCommandModel.getContent());
+        block.setContent(content);
         block.setPerson(person);
         block.setScene(scene);
-        
+
         // Save stuff
         blockService.update(block);
 
@@ -287,6 +325,40 @@ public class BlockWebServiceImpl implements BlockWebService {
         }
 
         return createPersonViewModels;
+    }
+
+    private static final Pattern CHARACTER_NAME_PATTERN = Pattern.compile("^([A-Z]{2,}(?:\\s+[A-Z]{2,})*)(?:\\s*\\n|\\s+|$)");
+
+    private String extractCharacterName(String content) {
+        if (content == null) return null;
+        Matcher matcher = CHARACTER_NAME_PATTERN.matcher(content.trim());
+        if (matcher.find()) {
+            return matcher.group(1);
+        }
+        return null;
+    }
+
+    private String stripCharacterName(String content) {
+        if (content == null) return content;
+        Matcher matcher = CHARACTER_NAME_PATTERN.matcher(content.trim());
+        if (matcher.find()) {
+            return content.trim().substring(matcher.end()).trim();
+        }
+        return content;
+    }
+
+    private Person findOrCreatePerson(String characterName, Project project) {
+        List<Person> persons = personService.getPersonsByProject(project);
+        for (Person person : persons) {
+            if (person.getName().equalsIgnoreCase(characterName)) {
+                return person;
+            }
+        }
+        Person newPerson = new Person();
+        newPerson.setName(characterName);
+        newPerson.setFullName(characterName);
+        newPerson.setProject(project);
+        return personService.create(newPerson);
     }
 
     // Translate edit person/scene

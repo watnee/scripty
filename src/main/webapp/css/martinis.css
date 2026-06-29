@@ -5,7 +5,8 @@
 #table-actors a,
 #table-projects a,
 #table-scenes a,
-#table-blocks a.character-name {
+#table-blocks a.character-name,
+.table-blocks-all a.character-name {
     color: inherit;
     text-decoration: none;
 }
@@ -13,12 +14,14 @@
 #table-actors td,
 #table-projects td,
 #table-scenes td,
-#table-blocks td {
+#table-blocks td,
+.table-blocks-all td {
     border-top: none;
 }
 
 #table-scenes td:first-child,
-#table-blocks .block-content {
+#table-blocks .block-content,
+.table-blocks-all .block-content {
     width: 99%;
 }
 

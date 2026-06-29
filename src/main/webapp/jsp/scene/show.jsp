@@ -20,7 +20,7 @@
                     <li aria-current="page" style="text-transform: uppercase">${viewModel.name}</li>
                 </ol>
             </nav>
-            <h1 style="text-transform: uppercase">${viewModel.name} <small><a href="${pageContext.request.contextPath}/scene/edit?id=${viewModel.id}" role="button">edit</a> <a href="${pageContext.request.contextPath}/scene/delete?id=${viewModel.id}" role="button" _="on click if not confirm('Are you sure you want to delete this scene?') halt">delete</a></small></h1>
+            <h1><span class="scene-name-wrap"><span class="scene-name-display" hx-get="${pageContext.request.contextPath}/scene/editNameInline?id=${viewModel.id}" hx-trigger="click" hx-target="closest .scene-name-wrap" hx-swap="innerHTML" style="cursor: pointer; text-transform: uppercase">${viewModel.name}</span></span> <small><a href="${pageContext.request.contextPath}/scene/delete?id=${viewModel.id}" role="button" _="on click if not confirm('Are you sure you want to delete this scene?') halt">delete</a></small></h1>
             <table id="table-blocks">
                 <c:forEach items="${viewModel.blocks}" var="block" varStatus="loop">
                     <tr draggable="true" data-block-id="${block.id}" data-block-order="${block.order}">

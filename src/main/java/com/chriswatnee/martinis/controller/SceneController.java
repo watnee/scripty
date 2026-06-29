@@ -12,6 +12,7 @@ import com.chriswatnee.martinis.dto.Scene;
 import com.chriswatnee.martinis.viewmodel.scene.createscene.CreateSceneViewModel;
 import com.chriswatnee.martinis.viewmodel.scene.createscenebelow.CreateSceneBelowViewModel;
 import com.chriswatnee.martinis.viewmodel.scene.editscene.EditSceneViewModel;
+import com.chriswatnee.martinis.viewmodel.scene.allscenes.AllScenesViewModel;
 import com.chriswatnee.martinis.viewmodel.scene.sceneprofile.SceneProfileViewModel;
 import com.chriswatnee.martinis.webservice.SceneWebService;
 import javax.inject.Inject;
@@ -43,6 +44,16 @@ public class SceneController {
         model.addAttribute("viewModel", viewModel);
 
         return "scene/show";
+    }
+
+    @RequestMapping(value = "/all")
+    public String all(@RequestParam Integer projectId, Model model) {
+
+        AllScenesViewModel viewModel = sceneWebService.getAllScenesViewModel(projectId);
+
+        model.addAttribute("viewModel", viewModel);
+
+        return "scene/all";
     }
     
     @RequestMapping(value = "/delete")
@@ -174,6 +185,27 @@ public class SceneController {
         Scene scene = sceneWebService.saveCreateSceneCommandModel(commandModel);
         model.addAttribute("scene", scene);
         return "scene/sceneRow";
+    }
+
+    @RequestMapping(value = "/editNameInline")
+    public String editNameInline(@RequestParam Integer id, Model model) {
+        EditSceneViewModel viewModel = sceneWebService.getEditSceneViewModel(id);
+        model.addAttribute("viewModel", viewModel);
+        model.addAttribute("commandModel", viewModel.getEditSceneCommandModel());
+        return "scene/editNameInline";
+    }
+
+    @RequestMapping(value = "/editNameInline", method = RequestMethod.POST)
+    public String saveEditNameInline(@Valid @ModelAttribute("commandModel") EditSceneCommandModel commandModel, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            EditSceneViewModel viewModel = sceneWebService.getEditSceneViewModel(commandModel.getId());
+            model.addAttribute("viewModel", viewModel);
+            model.addAttribute("commandModel", commandModel);
+            return "scene/editNameInline";
+        }
+        Scene scene = sceneWebService.saveEditSceneCommandModel(commandModel);
+        model.addAttribute("scene", scene);
+        return "scene/showNameInline";
     }
 
     @RequestMapping(value = "/createBelowInline")

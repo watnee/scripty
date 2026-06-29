@@ -17,6 +17,8 @@ import com.chriswatnee.martinis.viewmodel.person.createperson.CreateActorViewMod
 import com.chriswatnee.martinis.viewmodel.person.createperson.CreatePersonViewModel;
 import com.chriswatnee.martinis.viewmodel.person.editperson.EditActorViewModel;
 import com.chriswatnee.martinis.viewmodel.person.editperson.EditPersonViewModel;
+import com.chriswatnee.martinis.viewmodel.person.personlist.CharacterViewModel;
+import com.chriswatnee.martinis.viewmodel.person.personlist.PersonListViewModel;
 import com.chriswatnee.martinis.viewmodel.person.personprofile.PersonProfileViewModel;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +39,24 @@ public class PersonWebServiceImpl implements PersonWebService {
         this.personService = personService;
         this.actorService = actorService;
         this.projectService = projectService;
+    }
+
+    @Override
+    public PersonListViewModel getPersonListViewModel(Integer projectId) {
+
+        // Instantiate
+        PersonListViewModel personListViewModel = new PersonListViewModel();
+
+        // Look up stuff
+        Project project = projectService.read(projectId);
+        List<Person> persons = personService.getPersonsByProject(project);
+
+        // Put stuff
+        personListViewModel.setProjectId(project.getId());
+        personListViewModel.setProjectTitle(project.getTitle());
+        personListViewModel.setCharacters(translateCharacterViewModel(persons));
+
+        return personListViewModel;
     }
 
     @Override
@@ -197,6 +217,20 @@ public class PersonWebServiceImpl implements PersonWebService {
         return person;
     }
     
+    private List<CharacterViewModel> translateCharacterViewModel(List<Person> persons) {
+
+        List<CharacterViewModel> characterViewModels = new ArrayList<>();
+
+        for (Person person : persons) {
+            CharacterViewModel characterViewModel = new CharacterViewModel();
+            characterViewModel.setId(person.getId());
+            characterViewModel.setName(person.getName());
+            characterViewModels.add(characterViewModel);
+        }
+
+        return characterViewModels;
+    }
+
     // Translate create actor
     private List<CreateActorViewModel> translateCreateActorViewModel(List<Actor> actors) {
 

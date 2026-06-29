@@ -10,6 +10,7 @@ import com.chriswatnee.martinis.commandmodel.person.editperson.EditPersonCommand
 import com.chriswatnee.martinis.dto.Person;
 import com.chriswatnee.martinis.viewmodel.person.createperson.CreatePersonViewModel;
 import com.chriswatnee.martinis.viewmodel.person.editperson.EditPersonViewModel;
+import com.chriswatnee.martinis.viewmodel.person.personlist.PersonListViewModel;
 import com.chriswatnee.martinis.viewmodel.person.personprofile.PersonProfileViewModel;
 
 /**
@@ -17,7 +18,8 @@ import com.chriswatnee.martinis.viewmodel.person.personprofile.PersonProfileView
  * @author chris
  */
 public interface PersonWebService {
-    
+
+    public PersonListViewModel getPersonListViewModel(Integer projectId);
     public PersonProfileViewModel getPersonProfileViewModel(Integer id);
 
     public CreatePersonViewModel getCreatePersonViewModel(Integer projectId);

@@ -16,6 +16,7 @@ import com.chriswatnee.martinis.service.BlockService;
 import com.chriswatnee.martinis.service.PersonService;
 import com.chriswatnee.martinis.service.ProjectService;
 import com.chriswatnee.martinis.service.SceneService;
+import com.chriswatnee.martinis.viewmodel.scene.allscenes.AllScenesViewModel;
 import com.chriswatnee.martinis.viewmodel.scene.createscene.CreateSceneViewModel;
 import com.chriswatnee.martinis.viewmodel.scene.createscenebelow.CreateSceneBelowViewModel;
 import com.chriswatnee.martinis.viewmodel.scene.editscene.EditSceneViewModel;
@@ -84,6 +85,26 @@ public class SceneWebServiceImpl implements SceneWebService {
         sceneProfileViewModel.setBlocks(translateBlock(blocks));
 
         return sceneProfileViewModel;
+    }
+
+    @Override
+    public AllScenesViewModel getAllScenesViewModel(Integer projectId) {
+
+        AllScenesViewModel allScenesViewModel = new AllScenesViewModel();
+
+        Project project = projectService.read(projectId);
+        List<Scene> scenes = sceneService.getScenesByProject(project);
+
+        allScenesViewModel.setProjectId(project.getId());
+        allScenesViewModel.setProjectTitle(project.getTitle());
+
+        List<SceneProfileViewModel> sceneProfiles = new ArrayList<>();
+        for (Scene scene : scenes) {
+            sceneProfiles.add(getSceneProfileViewModel(scene.getId()));
+        }
+        allScenesViewModel.setScenes(sceneProfiles);
+
+        return allScenesViewModel;
     }
 
     @Override
