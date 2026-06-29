@@ -9,7 +9,7 @@
         <link href="${pageContext.request.contextPath}/css/martinis.css" rel="stylesheet">
         <link rel="shortcut icon" href="${pageContext.request.contextPath}/favicon.ico" type="image/x-icon">
     </head>
-    <body>
+    <body hx-boost="true">
         <jsp:include page="../includes/nav.jsp" />
         <div class="container">
             <jsp:include page="../includes/logout.jsp" />
@@ -19,7 +19,7 @@
                 <li class="active text-uppercase">${viewModel.name}</li>
             </ol>
             <div class="page-header">
-                <h1 class="text-uppercase">${viewModel.name} <small><a href="${pageContext.request.contextPath}/scene/edit?id=${viewModel.id}" class="btn btn-default btn-xs" role="button">edit</a> <a href="${pageContext.request.contextPath}/scene/delete?id=${viewModel.id}" class="btn btn-default btn-xs" role="button">delete</a></small></h1>
+                <h1 class="text-uppercase">${viewModel.name} <small><a href="${pageContext.request.contextPath}/scene/edit?id=${viewModel.id}" class="btn btn-default btn-xs" role="button">edit</a> <a href="${pageContext.request.contextPath}/scene/delete?id=${viewModel.id}" class="btn btn-default btn-xs" role="button" hx-confirm="Are you sure you want to delete this scene?">delete</a></small></h1>
             </div>
             <table id="table-blocks" class="table table-hover">
                 <c:forEach items="${viewModel.blocks}" var="block" varStatus="loop">
@@ -42,7 +42,7 @@
                         <td>
                             <div class="nowrap">
                                 <a href="${pageContext.request.contextPath}/block/edit?id=${block.id}" class="btn btn-default btn-xs" role="button">edit</a>
-                                <a href="${pageContext.request.contextPath}/block/delete?id=${block.id}" class="btn btn-default btn-xs" role="button">delete</a>
+                                <a href="${pageContext.request.contextPath}/block/delete?id=${block.id}" class="btn btn-default btn-xs" role="button" hx-confirm="Are you sure you want to delete this block?">delete</a>
                                 <c:if test="${not loop.last}">
                                     <a href="${pageContext.request.contextPath}/block/moveDown?id=${block.id}" class="btn btn-default btn-xs move-down" role="button">↓</a>
                                 </c:if>
@@ -71,7 +71,6 @@
                 </ul>
             </nav>
         </div>
-        <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>
-        <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+        <script src="${pageContext.request.contextPath}/js/htmx.min.js"></script>
     </body>
 </html>

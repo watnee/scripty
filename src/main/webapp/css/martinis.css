@@ -45,3 +45,12 @@
 #table-blocks tr:last-child .btn.move-up {
     margin-left: 22px;
 }
+
+.htmx-settling body {
+    opacity: 1;
+}
+
+.htmx-swapping body {
+    opacity: 0;
+    transition: opacity 0.1s ease-out;
+}

@@ -8,7 +8,7 @@
         <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
         <link rel="shortcut icon" href="${pageContext.request.contextPath}/favicon.ico" type="image/x-icon">
     </head>
-    <body>
+    <body hx-boost="true">
         <jsp:include page="includes/nav.jsp">
             <jsp:param name="page" value="index" />
         </jsp:include>
@@ -21,7 +21,6 @@
                 <p><a href="${pageContext.request.contextPath}/login" class="btn btn-primary" role="button">Login</a></p>
             </c:if>
         </div>
-        <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>
-        <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+        <script src="${pageContext.request.contextPath}/js/htmx.min.js"></script>
     </body>
 </html>

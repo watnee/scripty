@@ -9,7 +9,7 @@
         <link href="${pageContext.request.contextPath}/css/martinis.css" rel="stylesheet">
         <link rel="shortcut icon" href="${pageContext.request.contextPath}/favicon.ico" type="image/x-icon">
     </head>
-    <body>
+    <body hx-boost="true">
         <jsp:include page="../includes/nav.jsp" />
         <div class="container">
             <jsp:include page="../includes/logout.jsp" />
@@ -18,7 +18,7 @@
                 <li class="active">${viewModel.title}</li>
             </ol>
             <div class="page-header">
-                <h1>${viewModel.title} <small><a href="${pageContext.request.contextPath}/project/edit?id=${viewModel.id}" class="btn btn-default btn-xs" role="button">edit</a> <a href="${pageContext.request.contextPath}/project/delete?id=${viewModel.id}" class="btn btn-default btn-xs" role="button">delete</a></small></h1>
+                <h1>${viewModel.title} <small><a href="${pageContext.request.contextPath}/project/edit?id=${viewModel.id}" class="btn btn-default btn-xs" role="button">edit</a> <a href="${pageContext.request.contextPath}/project/delete?id=${viewModel.id}" class="btn btn-default btn-xs" role="button" hx-confirm="Are you sure you want to delete this project?">delete</a></small></h1>
             </div>
             <div class="row">
                 <div class="col-md-9">
@@ -59,7 +59,6 @@
                 </div>
             </div>
         </div>
-        <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>
-        <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+        <script src="${pageContext.request.contextPath}/js/htmx.min.js"></script>
     </body>
 </html>

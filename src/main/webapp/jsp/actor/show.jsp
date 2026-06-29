@@ -9,7 +9,7 @@
         <link href="${pageContext.request.contextPath}/css/martinis.css" rel="stylesheet">
         <link rel="shortcut icon" href="${pageContext.request.contextPath}/favicon.ico" type="image/x-icon">
     </head>
-    <body>
+    <body hx-boost="true">
         <jsp:include page="../includes/nav.jsp" />
         <div class="container">
             <jsp:include page="../includes/logout.jsp" />
@@ -18,12 +18,11 @@
                 <li class="active">${viewModel.first} ${viewModel.last}</li>
             </ol>
             <div class="page-header">
-                <h1>${viewModel.first} ${viewModel.last} <small><a href="${pageContext.request.contextPath}/actor/edit?id=${viewModel.id}" class="btn btn-default btn-xs" role="button">edit</a> <a href="${pageContext.request.contextPath}/actor/delete?id=${viewModel.id}" class="btn btn-default btn-xs" role="button">delete</a></small></h1>
+                <h1>${viewModel.first} ${viewModel.last} <small><a href="${pageContext.request.contextPath}/actor/edit?id=${viewModel.id}" class="btn btn-default btn-xs" role="button">edit</a> <a href="${pageContext.request.contextPath}/actor/delete?id=${viewModel.id}" class="btn btn-default btn-xs" role="button" hx-confirm="Are you sure you want to delete this actor?">delete</a></small></h1>
             </div>
             <p>Phone: ${viewModel.phone}</p>
             <p>Email: ${viewModel.email}</p>
         </div>
-        <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>
-        <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+        <script src="${pageContext.request.contextPath}/js/htmx.min.js"></script>
     </body>
 </html>
