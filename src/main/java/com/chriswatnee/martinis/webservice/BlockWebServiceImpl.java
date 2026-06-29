@@ -24,8 +24,6 @@ import com.chriswatnee.martinis.viewmodel.block.editblock.EditPersonViewModel;
 import com.chriswatnee.martinis.viewmodel.scene.sceneprofile.BlockViewModel;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.inject.Inject;
 
 /**
@@ -327,24 +325,50 @@ public class BlockWebServiceImpl implements BlockWebService {
         return createPersonViewModels;
     }
 
-    private static final Pattern CHARACTER_NAME_PATTERN = Pattern.compile("^([A-Z]{2,}(?:\\s+[A-Z]{2,})*)(?:\\s*\\n|\\s+|$)");
+    private int findCharacterLineIndex(String[] lines) {
+        for (int i = 0; i < lines.length; i++) {
+            String line = lines[i].trim();
+            if (line.startsWith("@") && line.length() > 1) return i;
+            if (i == 0) continue;
+            if (line.isEmpty()) continue;
+            if (!line.equals(line.toUpperCase())) continue;
+            if (!line.matches(".*[A-Z].*")) continue;
+            if (!lines[i - 1].trim().isEmpty()) continue;
+            boolean emptyAfter = (i + 1 < lines.length && lines[i + 1].trim().isEmpty());
+            if (emptyAfter) continue;
+            return i;
+        }
+        return -1;
+    }
+
+    private String characterNameFromLine(String line) {
+        String trimmed = line.trim();
+        if (trimmed.startsWith("@")) return trimmed.substring(1).trim();
+        return trimmed;
+    }
 
     private String extractCharacterName(String content) {
         if (content == null) return null;
-        Matcher matcher = CHARACTER_NAME_PATTERN.matcher(content.trim());
-        if (matcher.find()) {
-            return matcher.group(1);
-        }
-        return null;
+        String[] lines = content.split("\n", -1);
+        int idx = findCharacterLineIndex(lines);
+        if (idx < 0) return null;
+        return characterNameFromLine(lines[idx]);
     }
 
     private String stripCharacterName(String content) {
         if (content == null) return content;
-        Matcher matcher = CHARACTER_NAME_PATTERN.matcher(content.trim());
-        if (matcher.find()) {
-            return content.trim().substring(matcher.end()).trim();
+        String[] lines = content.split("\n", -1);
+        int idx = findCharacterLineIndex(lines);
+        if (idx < 0) return content;
+        boolean isForced = lines[idx].trim().startsWith("@");
+        StringBuilder sb = new StringBuilder();
+        for (int j = 0; j < lines.length; j++) {
+            if (j == idx) continue;
+            if (!isForced && j == idx - 1 && lines[j].trim().isEmpty()) continue;
+            if (sb.length() > 0) sb.append("\n");
+            sb.append(lines[j]);
         }
-        return content;
+        return sb.toString().trim();
     }
 
     private Person findOrCreatePerson(String characterName, Project project) {
