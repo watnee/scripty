@@ -22,6 +22,7 @@ public interface BlockDao {
     public void delete(Block block);
     public void moveUp(Block block);
     public void moveDown(Block block);
+    public void moveTo(Block block, int newOrder);
     public List<Block> list();
     public List<Block> getBlocksByScene(Scene scene);
     

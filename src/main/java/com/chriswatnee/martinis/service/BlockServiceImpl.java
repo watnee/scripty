@@ -60,6 +60,11 @@ public class BlockServiceImpl implements BlockService {
     }
 
     @Override
+    public void moveTo(Block block, int newOrder) {
+        blockDao.moveTo(block, newOrder);
+    }
+
+    @Override
     public List<Block> list() {
         return blockDao.list();
     }

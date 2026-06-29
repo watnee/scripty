@@ -32,5 +32,6 @@ public interface BlockWebService {
     public Block deleteBlock(Integer id);
     public Block moveBlockUp(Integer id);
     public Block moveBlockDown(Integer id);
+    public Block moveBlockTo(Integer id, int newOrder);
     
 }

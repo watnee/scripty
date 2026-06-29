@@ -23,7 +23,8 @@
             <h1 style="text-transform: uppercase">${viewModel.name} <small><a href="${pageContext.request.contextPath}/scene/edit?id=${viewModel.id}" role="button">edit</a> <a href="${pageContext.request.contextPath}/scene/delete?id=${viewModel.id}" role="button" _="on click if not confirm('Are you sure you want to delete this scene?') halt">delete</a></small></h1>
             <table id="table-blocks">
                 <c:forEach items="${viewModel.blocks}" var="block" varStatus="loop">
-                    <tr>
+                    <tr draggable="true" data-block-id="${block.id}" data-block-order="${block.order}">
+                        <td class="drag-handle" title="Drag to reorder">&#8942;&#8942;</td>
                         <td class="block-content" hx-get="${pageContext.request.contextPath}/block/editInline?id=${block.id}" hx-trigger="click[!event.target.closest('a')&&!event.target.closest('form')]" hx-swap="innerHTML">
                             <c:if test="${not empty block.personName}">
                                 <p style="margin-bottom: 0; text-align: center">
@@ -41,14 +42,15 @@
                                 <c:if test="${not loop.first}">
                                     <a href="${pageContext.request.contextPath}/block/moveUp?id=${block.id}" class="move-up" role="button">&#8593;</a>
                                 </c:if>
-                                <a href="${pageContext.request.contextPath}/block/createBelow?id=${block.id}" class="create-below" role="button">+ block</a>
+                                <a hx-get="${pageContext.request.contextPath}/block/createBelowInline?id=${block.id}" hx-target="closest tr" hx-swap="afterend" class="create-below" role="button">+ block</a>
                             </span>
                         </td>
                     </tr>
                 </c:forEach>
+                <tr hx-get="${pageContext.request.contextPath}/block/createInline?sceneId=${viewModel.id}" hx-trigger="load" hx-swap="outerHTML"></tr>
             </table>
             <p>
-                <a href="${pageContext.request.contextPath}/block/create?sceneId=${viewModel.id}" role="button">Create New Block</a>
+                <a hx-get="${pageContext.request.contextPath}/block/createInline?sceneId=${viewModel.id}" hx-target="#table-blocks" hx-swap="beforeend" role="button">Create New Block</a>
                 <a id="create-scene-btn" hx-get="${pageContext.request.contextPath}/scene/createBelowInline?id=${viewModel.id}" hx-target="#create-scene-btn" hx-swap="afterend" role="button" _="on htmx:afterSwap hide me">Create New Scene</a>
                 <a href="${pageContext.request.contextPath}/character/create?projectId=${viewModel.projectId}" role="button">Create New Character</a>
             </p>
@@ -63,5 +65,53 @@
         </main>
         <script src="https://unpkg.com/htmx.org@2.0.4"></script>
         <script src="${pageContext.request.contextPath}/js/_hyperscript.min.js"></script>
+        <script>
+        (function() {
+            var table = document.getElementById('table-blocks');
+            var dragRow = null;
+
+            table.addEventListener('dragstart', function(e) {
+                var tr = e.target.closest('tr[data-block-id]');
+                if (!tr) { e.preventDefault(); return; }
+                dragRow = tr;
+                tr.classList.add('dragging');
+                e.dataTransfer.effectAllowed = 'move';
+            });
+
+            table.addEventListener('dragend', function() {
+                if (dragRow) dragRow.classList.remove('dragging');
+                table.querySelectorAll('.drag-over').forEach(function(el) { el.classList.remove('drag-over'); });
+                dragRow = null;
+            });
+
+            table.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                var tr = e.target.closest('tr[data-block-id]');
+                if (!tr || tr === dragRow) return;
+                table.querySelectorAll('.drag-over').forEach(function(el) { el.classList.remove('drag-over'); });
+                tr.classList.add('drag-over');
+            });
+
+            table.addEventListener('dragleave', function(e) {
+                var tr = e.target.closest('tr[data-block-id]');
+                if (tr) tr.classList.remove('drag-over');
+            });
+
+            table.addEventListener('drop', function(e) {
+                e.preventDefault();
+                var targetRow = e.target.closest('tr[data-block-id]');
+                if (!targetRow || !dragRow || targetRow === dragRow) return;
+                var blockId = dragRow.getAttribute('data-block-id');
+                var targetOrder = targetRow.getAttribute('data-block-order');
+                var form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '${pageContext.request.contextPath}/block/moveTo';
+                form.innerHTML = '<input type="hidden" name="id" value="' + blockId + '">' +
+                                 '<input type="hidden" name="position" value="' + targetOrder + '">';
+                document.body.appendChild(form);
+                form.submit();
+            });
+        })();
+        </script>
     </body>
 </html>

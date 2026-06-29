@@ -59,6 +59,12 @@ public class BlockController {
         return "redirect:/scene/show?id=" + block.getScene().getId();
     }
     
+    @RequestMapping(value = "/moveTo", method = RequestMethod.POST)
+    public String moveTo(@RequestParam Integer id, @RequestParam int position) {
+        Block block = blockWebService.moveBlockTo(id, position);
+        return "redirect:/scene/show?id=" + block.getScene().getId();
+    }
+
     @RequestMapping(value = "/editInline")
     public String editInline(@RequestParam Integer id, Model model) {
         EditBlockViewModel viewModel = blockWebService.getEditBlockViewModel(id);
@@ -176,5 +182,50 @@ public class BlockController {
         Block block = blockWebService.saveCreateBlockBelowCommandModel(commandModel);
 
         return "redirect:/scene/show?id=" + block.getScene().getId();
+    }
+
+    @RequestMapping(value = "/createInline")
+    public String createInline(@RequestParam Integer sceneId, Model model) {
+        CreateBlockViewModel viewModel = blockWebService.getCreateBlockViewModel(sceneId);
+        model.addAttribute("viewModel", viewModel);
+        return "block/createInline";
+    }
+
+    @RequestMapping(value = "/createInline", method = RequestMethod.POST)
+    public String saveCreateInline(@RequestParam Integer sceneId, @RequestParam String content, @RequestParam(required = false) Integer personId, Model model) {
+        CreateBlockCommandModel commandModel = new CreateBlockCommandModel();
+        commandModel.setSceneId(sceneId);
+        commandModel.setContent(content);
+        commandModel.setPersonId(personId);
+        Block block = blockWebService.saveCreateBlockCommandModel(commandModel);
+        BlockViewModel vm = blockWebService.getBlockViewModel(block.getId());
+        model.addAttribute("block", vm);
+        CreateBlockBelowViewModel createViewModel = blockWebService.getCreateBlockBelowViewModel(block.getId());
+        model.addAttribute("viewModel", createViewModel);
+        model.addAttribute("blockId", block.getId());
+        return "block/blockRowWithCreate";
+    }
+
+    @RequestMapping(value = "/createBelowInline")
+    public String createBelowInline(@RequestParam Integer id, Model model) {
+        CreateBlockBelowViewModel viewModel = blockWebService.getCreateBlockBelowViewModel(id);
+        model.addAttribute("viewModel", viewModel);
+        model.addAttribute("blockId", id);
+        return "block/createBelowInline";
+    }
+
+    @RequestMapping(value = "/createBelowInline", method = RequestMethod.POST)
+    public String saveCreateBelowInline(@RequestParam Integer id, @RequestParam String content, @RequestParam(required = false) Integer personId, Model model) {
+        CreateBlockBelowCommandModel commandModel = new CreateBlockBelowCommandModel();
+        commandModel.setId(id);
+        commandModel.setContent(content);
+        commandModel.setPersonId(personId);
+        Block block = blockWebService.saveCreateBlockBelowCommandModel(commandModel);
+        BlockViewModel vm = blockWebService.getBlockViewModel(block.getId());
+        model.addAttribute("block", vm);
+        CreateBlockBelowViewModel createViewModel = blockWebService.getCreateBlockBelowViewModel(block.getId());
+        model.addAttribute("viewModel", createViewModel);
+        model.addAttribute("blockId", block.getId());
+        return "block/blockRowWithCreate";
     }
 }

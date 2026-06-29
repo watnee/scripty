@@ -266,6 +266,13 @@ public class BlockWebServiceImpl implements BlockWebService {
 
         return block;
     }
+
+    @Override
+    public Block moveBlockTo(Integer id, int newOrder) {
+        Block block = blockService.read(id);
+        blockService.moveTo(block, newOrder);
+        return block;
+    }
     
     // Translate create person/scene
     private List<CreatePersonViewModel> translateCreatePersonViewModel(List<Person> persons) {

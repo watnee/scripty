@@ -204,6 +204,27 @@ public class BlockDaoImpl implements BlockDao {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void moveTo(Block block, int newOrder) {
+        int currentOrder = block.getOrder();
+        int sceneId = block.getScene().getId();
+
+        if (newOrder == currentOrder) return;
+
+        if (newOrder < currentOrder) {
+            jdbcTemplate.update(
+                "UPDATE block SET `order` = `order` + 1 WHERE `order` >= ? AND `order` < ? AND scene_id = ?",
+                newOrder, currentOrder, sceneId);
+        } else {
+            jdbcTemplate.update(
+                "UPDATE block SET `order` = `order` - 1 WHERE `order` > ? AND `order` <= ? AND scene_id = ?",
+                currentOrder, newOrder, sceneId);
+        }
+
+        jdbcTemplate.update(UPDATE_ORDER_QUERY, newOrder, block.getId());
+    }
+
+    @Override
     public List<Block> list() {
         return jdbcTemplate.query(LIST_QUERY, new BlockMapper());
     }
