@@ -9,17 +9,16 @@
         <link href="${pageContext.request.contextPath}/css/martinis.css" rel="stylesheet">
         <link rel="shortcut icon" href="${pageContext.request.contextPath}/favicon.ico" type="image/x-icon">
     </head>
-    <body hx-boost="true">
+    <body>
         <jsp:include page="includes/nav.jsp">
             <jsp:param name="page" value="index" />
         </jsp:include>
         <main>
             <h1>Scripty</h1>
-            <p>Welcome!</p>
             <c:if test="${pageContext.request.userPrincipal.name == null}">
                 <p><a href="${pageContext.request.contextPath}/login" role="button">Login</a></p>
             </c:if>
         </main>
-        <script src="${pageContext.request.contextPath}/js/htmx.min.js"></script>
+        <script src="${pageContext.request.contextPath}/js/_hyperscript.min.js"></script>
     </body>
 </html>

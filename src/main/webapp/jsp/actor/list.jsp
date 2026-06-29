@@ -9,7 +9,7 @@
         <link href="${pageContext.request.contextPath}/css/martinis.css" rel="stylesheet">
         <link rel="shortcut icon" href="${pageContext.request.contextPath}/favicon.ico" type="image/x-icon">
     </head>
-    <body hx-boost="true">
+    <body>
         <jsp:include page="../includes/nav.jsp">
             <jsp:param name="page" value="casting" />
         </jsp:include>
@@ -30,6 +30,6 @@
             </table>
             <p><a href="${pageContext.request.contextPath}/actor/create" role="button">Create New Actor</a></p>
         </main>
-        <script src="${pageContext.request.contextPath}/js/htmx.min.js"></script>
+        <script src="${pageContext.request.contextPath}/js/_hyperscript.min.js"></script>
     </body>
 </html>

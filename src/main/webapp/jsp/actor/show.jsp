@@ -9,7 +9,7 @@
         <link href="${pageContext.request.contextPath}/css/martinis.css" rel="stylesheet">
         <link rel="shortcut icon" href="${pageContext.request.contextPath}/favicon.ico" type="image/x-icon">
     </head>
-    <body hx-boost="true">
+    <body>
         <jsp:include page="../includes/nav.jsp" />
         <main>
             <jsp:include page="../includes/logout.jsp" />
@@ -19,10 +19,10 @@
                     <li aria-current="page">${viewModel.first} ${viewModel.last}</li>
                 </ol>
             </nav>
-            <h1>${viewModel.first} ${viewModel.last} <small><a href="${pageContext.request.contextPath}/actor/edit?id=${viewModel.id}" role="button">edit</a> <a href="${pageContext.request.contextPath}/actor/delete?id=${viewModel.id}" role="button" hx-confirm="Are you sure you want to delete this actor?">delete</a></small></h1>
+            <h1>${viewModel.first} ${viewModel.last} <small><a href="${pageContext.request.contextPath}/actor/edit?id=${viewModel.id}" role="button">edit</a> <a href="${pageContext.request.contextPath}/actor/delete?id=${viewModel.id}" role="button" _="on click if not confirm('Are you sure you want to delete this actor?') halt">delete</a></small></h1>
             <p>Phone: ${viewModel.phone}</p>
             <p>Email: ${viewModel.email}</p>
         </main>
-        <script src="${pageContext.request.contextPath}/js/htmx.min.js"></script>
+        <script src="${pageContext.request.contextPath}/js/_hyperscript.min.js"></script>
     </body>
 </html>

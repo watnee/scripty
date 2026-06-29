@@ -9,7 +9,7 @@
         <link href="${pageContext.request.contextPath}/css/martinis.css" rel="stylesheet">
         <link rel="shortcut icon" href="${pageContext.request.contextPath}/favicon.ico" type="image/x-icon">
     </head>
-    <body hx-boost="true">
+    <body>
         <jsp:include page="../includes/nav.jsp" />
         <main>
             <jsp:include page="../includes/logout.jsp" />
@@ -20,7 +20,7 @@
                     <li aria-current="page" style="text-transform: uppercase">${viewModel.name}</li>
                 </ol>
             </nav>
-            <h1 style="text-transform: uppercase">${viewModel.name} <small><a href="${pageContext.request.contextPath}/scene/edit?id=${viewModel.id}" role="button">edit</a> <a href="${pageContext.request.contextPath}/scene/delete?id=${viewModel.id}" role="button" hx-confirm="Are you sure you want to delete this scene?">delete</a></small></h1>
+            <h1 style="text-transform: uppercase">${viewModel.name} <small><a href="${pageContext.request.contextPath}/scene/edit?id=${viewModel.id}" role="button">edit</a> <a href="${pageContext.request.contextPath}/scene/delete?id=${viewModel.id}" role="button" _="on click if not confirm('Are you sure you want to delete this scene?') halt">delete</a></small></h1>
             <table id="table-blocks">
                 <c:forEach items="${viewModel.blocks}" var="block" varStatus="loop">
                     <tr>
@@ -42,7 +42,7 @@
                         <td>
                             <span class="nowrap">
                                 <a href="${pageContext.request.contextPath}/block/edit?id=${block.id}" role="button">edit</a>
-                                <a href="${pageContext.request.contextPath}/block/delete?id=${block.id}" role="button" hx-confirm="Are you sure you want to delete this block?">delete</a>
+                                <a href="${pageContext.request.contextPath}/block/delete?id=${block.id}" role="button" _="on click if not confirm('Are you sure you want to delete this block?') halt">delete</a>
                                 <c:if test="${not loop.last}">
                                     <a href="${pageContext.request.contextPath}/block/moveDown?id=${block.id}" class="move-down" role="button">&#8595;</a>
                                 </c:if>
@@ -69,6 +69,6 @@
                 </c:if>
             </nav>
         </main>
-        <script src="${pageContext.request.contextPath}/js/htmx.min.js"></script>
+        <script src="${pageContext.request.contextPath}/js/_hyperscript.min.js"></script>
     </body>
 </html>

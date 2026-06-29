@@ -9,7 +9,7 @@
         <link href="${pageContext.request.contextPath}/css/martinis.css" rel="stylesheet">
         <link rel="shortcut icon" href="${pageContext.request.contextPath}/favicon.ico" type="image/x-icon">
     </head>
-    <body hx-boost="true">
+    <body>
         <jsp:include page="../includes/nav.jsp" />
         <main>
             <jsp:include page="../includes/logout.jsp" />
@@ -20,12 +20,12 @@
                     <li aria-current="page">${viewModel.name}</li>
                 </ol>
             </nav>
-            <h1>${viewModel.name} <small><a href="${pageContext.request.contextPath}/character/edit?id=${viewModel.id}" role="button">edit</a> <a href="${pageContext.request.contextPath}/character/delete?id=${viewModel.id}" role="button" hx-confirm="Are you sure you want to delete this character?">delete</a></small></h1>
+            <h1>${viewModel.name} <small><a href="${pageContext.request.contextPath}/character/edit?id=${viewModel.id}" role="button">edit</a> <a href="${pageContext.request.contextPath}/character/delete?id=${viewModel.id}" role="button" _="on click if not confirm('Are you sure you want to delete this character?') halt">delete</a></small></h1>
             <p>Full Name: ${viewModel.fullName}</p>
             <c:if test="${not empty viewModel.actorName}">
                 <p>Actor: <a href="${pageContext.request.contextPath}/actor/show?id=${viewModel.actorId}">${viewModel.actorName}</a></p>
             </c:if>
         </main>
-        <script src="${pageContext.request.contextPath}/js/htmx.min.js"></script>
+        <script src="${pageContext.request.contextPath}/js/_hyperscript.min.js"></script>
     </body>
 </html>

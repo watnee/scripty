@@ -9,7 +9,7 @@
         <link href="${pageContext.request.contextPath}/css/martinis.css" rel="stylesheet">
         <link rel="shortcut icon" href="${pageContext.request.contextPath}/favicon.ico" type="image/x-icon">
     </head>
-    <body hx-boost="true">
+    <body>
         <jsp:include page="../includes/nav.jsp" />
         <main>
             <jsp:include page="../includes/logout.jsp" />
@@ -19,7 +19,7 @@
                     <li aria-current="page">${viewModel.title}</li>
                 </ol>
             </nav>
-            <h1>${viewModel.title} <small><a href="${pageContext.request.contextPath}/project/edit?id=${viewModel.id}" role="button">edit</a> <a href="${pageContext.request.contextPath}/project/delete?id=${viewModel.id}" role="button" hx-confirm="Are you sure you want to delete this project?">delete</a></small></h1>
+            <h1>${viewModel.title} <small><a href="${pageContext.request.contextPath}/project/edit?id=${viewModel.id}" role="button">edit</a> <a href="${pageContext.request.contextPath}/project/delete?id=${viewModel.id}" role="button" _="on click if not confirm('Are you sure you want to delete this project?') halt">delete</a></small></h1>
             <div class="f-row" style="gap: 2rem; align-items: start">
                 <div style="flex: 3">
                     <h2>Scenes</h2>
@@ -57,6 +57,6 @@
                 </aside>
             </div>
         </main>
-        <script src="${pageContext.request.contextPath}/js/htmx.min.js"></script>
+        <script src="${pageContext.request.contextPath}/js/_hyperscript.min.js"></script>
     </body>
 </html>
