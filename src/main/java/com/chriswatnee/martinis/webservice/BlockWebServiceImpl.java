@@ -21,6 +21,7 @@ import com.chriswatnee.martinis.viewmodel.block.createblock.CreatePersonViewMode
 import com.chriswatnee.martinis.viewmodel.block.createblockbelow.CreateBlockBelowViewModel;
 import com.chriswatnee.martinis.viewmodel.block.editblock.EditBlockViewModel;
 import com.chriswatnee.martinis.viewmodel.block.editblock.EditPersonViewModel;
+import com.chriswatnee.martinis.viewmodel.scene.sceneprofile.BlockViewModel;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -215,6 +216,21 @@ public class BlockWebServiceImpl implements BlockWebService {
         return block;
     }
     
+    @Override
+    public BlockViewModel getBlockViewModel(Integer id) {
+        Block block = blockService.read(id);
+        BlockViewModel vm = new BlockViewModel();
+        vm.setId(block.getId());
+        vm.setOrder(block.getOrder());
+        vm.setContent(block.getContent());
+        if (block.getPerson() != null) {
+            Person person = personService.read(block.getPerson().getId());
+            vm.setPersonId(person.getId());
+            vm.setPersonName(person.getName());
+        }
+        return vm;
+    }
+
     @Override
     public Block deleteBlock(Integer id) {
 

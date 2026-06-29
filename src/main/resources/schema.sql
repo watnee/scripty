@@ -12,7 +12,8 @@ CREATE INDEX IF NOT EXISTS idx_user_username ON `user`(username);
 
 CREATE TABLE IF NOT EXISTS authority (
 	username varchar(20) NOT NULL,
-	authority varchar(20) NOT NULL
+	authority varchar(20) NOT NULL,
+	PRIMARY KEY (username, authority)
 );
 
 CREATE INDEX IF NOT EXISTS idx_authority_username ON authority(username);

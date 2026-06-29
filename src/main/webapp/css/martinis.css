@@ -22,6 +22,10 @@
     width: 99%;
 }
 
+#table-blocks .block-content {
+    cursor: pointer;
+}
+
 h1 > small a[role="button"],
 #table-scenes a[role="button"],
 #table-blocks a[role="button"] {

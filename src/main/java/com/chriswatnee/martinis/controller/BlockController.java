@@ -12,6 +12,7 @@ import com.chriswatnee.martinis.dto.Block;
 import com.chriswatnee.martinis.viewmodel.block.createblock.CreateBlockViewModel;
 import com.chriswatnee.martinis.viewmodel.block.createblockbelow.CreateBlockBelowViewModel;
 import com.chriswatnee.martinis.viewmodel.block.editblock.EditBlockViewModel;
+import com.chriswatnee.martinis.viewmodel.scene.sceneprofile.BlockViewModel;
 import com.chriswatnee.martinis.webservice.BlockWebService;
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -58,6 +59,35 @@ public class BlockController {
         return "redirect:/scene/show?id=" + block.getScene().getId();
     }
     
+    @RequestMapping(value = "/editInline")
+    public String editInline(@RequestParam Integer id, Model model) {
+        EditBlockViewModel viewModel = blockWebService.getEditBlockViewModel(id);
+        model.addAttribute("viewModel", viewModel);
+        model.addAttribute("commandModel", viewModel.getEditBlockCommandModel());
+        return "block/editInline";
+    }
+
+    @RequestMapping(value = "/editInline", method = RequestMethod.POST)
+    public String saveEditInline(@Valid @ModelAttribute("commandModel") EditBlockCommandModel commandModel, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            EditBlockViewModel viewModel = blockWebService.getEditBlockViewModel(commandModel.getId());
+            model.addAttribute("viewModel", viewModel);
+            model.addAttribute("commandModel", commandModel);
+            return "block/editInline";
+        }
+        Block block = blockWebService.saveEditBlockCommandModel(commandModel);
+        BlockViewModel vm = blockWebService.getBlockViewModel(block.getId());
+        model.addAttribute("block", vm);
+        return "block/showInline";
+    }
+
+    @RequestMapping(value = "/showInline")
+    public String showInline(@RequestParam Integer id, Model model) {
+        BlockViewModel vm = blockWebService.getBlockViewModel(id);
+        model.addAttribute("block", vm);
+        return "block/showInline";
+    }
+
     // Show Form
     @RequestMapping(value = "/edit")
     public String edit(@RequestParam Integer id, Model model) {

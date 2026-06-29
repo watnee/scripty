@@ -40,7 +40,7 @@
                             </tr>
                         </c:forEach>
                     </table>
-                    <p><a href="${pageContext.request.contextPath}/scene/create?projectId=${viewModel.id}" role="button">Create New Scene</a></p>
+                    <p><a id="create-scene-btn" hx-get="${pageContext.request.contextPath}/scene/createInline?projectId=${viewModel.id}" hx-target="#table-scenes" hx-swap="beforeend" role="button" _="on htmx:afterSwap hide me">Create New Scene</a></p>
                 </div>
                 <aside style="flex: 1">
                     <c:if test="${not empty viewModel.persons}">

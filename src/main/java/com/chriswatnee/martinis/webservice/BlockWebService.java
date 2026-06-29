@@ -12,6 +12,7 @@ import com.chriswatnee.martinis.dto.Block;
 import com.chriswatnee.martinis.viewmodel.block.createblock.CreateBlockViewModel;
 import com.chriswatnee.martinis.viewmodel.block.createblockbelow.CreateBlockBelowViewModel;
 import com.chriswatnee.martinis.viewmodel.block.editblock.EditBlockViewModel;
+import com.chriswatnee.martinis.viewmodel.scene.sceneprofile.BlockViewModel;
 
 /**
  *
@@ -22,6 +23,7 @@ public interface BlockWebService {
     public CreateBlockViewModel getCreateBlockViewModel(Integer sceneId);
     public CreateBlockBelowViewModel getCreateBlockBelowViewModel(Integer id);
     public EditBlockViewModel getEditBlockViewModel(Integer id);
+    public BlockViewModel getBlockViewModel(Integer id);
 
     public Block saveCreateBlockCommandModel(CreateBlockCommandModel createBlockCommandModel);
     public Block saveCreateBlockBelowCommandModel(CreateBlockBelowCommandModel createBlockBelowCommandModel);

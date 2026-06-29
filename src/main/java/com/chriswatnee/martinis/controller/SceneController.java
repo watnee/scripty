@@ -158,4 +158,37 @@ public class SceneController {
 
         return "redirect:/scene/show?id=" + scene.getId();
     }
+
+    @RequestMapping(value = "/createInline")
+    public String createInline(@RequestParam Integer projectId, Model model) {
+        model.addAttribute("projectId", projectId);
+        return "scene/createInline";
+    }
+
+    @RequestMapping(value = "/createInline", method = RequestMethod.POST)
+    public String saveCreateInline(@Valid @ModelAttribute("commandModel") CreateSceneCommandModel commandModel, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("projectId", commandModel.getProjectId());
+            return "scene/createInline";
+        }
+        Scene scene = sceneWebService.saveCreateSceneCommandModel(commandModel);
+        model.addAttribute("scene", scene);
+        return "scene/sceneRow";
+    }
+
+    @RequestMapping(value = "/createBelowInline")
+    public String createBelowInline(@RequestParam Integer id, Model model) {
+        model.addAttribute("sceneId", id);
+        return "scene/createBelowInline";
+    }
+
+    @RequestMapping(value = "/createBelowInline", method = RequestMethod.POST)
+    public String saveCreateBelowInline(@Valid @ModelAttribute("commandModel") CreateSceneBelowCommandModel commandModel, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("sceneId", commandModel.getId());
+            return "scene/createBelowInline";
+        }
+        Scene scene = sceneWebService.saveCreateSceneBelowCommandModel(commandModel);
+        return "redirect:/scene/show?id=" + scene.getId();
+    }
 }
