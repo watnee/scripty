@@ -4,14 +4,14 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Martinis - Login</title>
+        <title>Scripty - Login</title>
         <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
         <link rel="shortcut icon" href="${pageContext.request.contextPath}/favicon.ico" type="image/x-icon">
     </head>
     <body>
         <jsp:include page="includes/nav.jsp" />
         <div class="container">
-            <h1>Martinis</h1>
+            <h1>Scripty</h1>
             <c:if test="${param.login_error == 1}">
                 <p>Incorrect Username or Password.</p>
             </c:if>

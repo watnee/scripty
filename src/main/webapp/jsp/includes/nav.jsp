@@ -1,7 +1,7 @@
 <nav class="navbar navbar-inverse navbar-static-top">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="${pageContext.request.contextPath}">Martinis</a>
+            <a class="navbar-brand" href="${pageContext.request.contextPath}">Scripty</a>
         </div>
         <ul class="nav navbar-nav">
             <li class="${param.page == 'index' ? 'active' : ''}">

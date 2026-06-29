@@ -4,7 +4,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Martinis</title>
+        <title>Scripty</title>
         <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
         <link rel="shortcut icon" href="${pageContext.request.contextPath}/favicon.ico" type="image/x-icon">
     </head>
@@ -14,7 +14,7 @@
         </jsp:include>
         <div class="container">
             <div class="page-header">
-                <h1>Martinis</h1>
+                <h1>Scripty</h1>
             </div>
             <p>Welcome!</p>
             <c:if test="${pageContext.request.userPrincipal.name == null}">
