@@ -22,8 +22,10 @@
         <form-login login-processing-url="/j_spring_security_check"
                     login-page="/login"
                     authentication-failure-url="/login?login_error=1" />
-        <intercept-url pattern="/**"
+        <intercept-url pattern="/"
                        access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <intercept-url pattern="/**"
+                       access="ROLE_USER" />
     </http>
     <authentication-manager>
         <authentication-provider>
