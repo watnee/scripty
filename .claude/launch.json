@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "Maven Build (package)",
+      "runtimeExecutable": "mvn",
+      "runtimeArgs": ["clean", "package", "-DskipTests"],
+      "port": null
+    },
+    {
+      "name": "Scripty Web Server (Tomcat)",
+      "runtimeExecutable": "java",
+      "runtimeArgs": ["-jar", "target/dependency/webapp-runner.jar", "--port", "8080", "target/spring-mvc-railway-webapp.war"],
+      "port": 8080
+    }
+  ]
+}
