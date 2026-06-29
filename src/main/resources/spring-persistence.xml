@@ -19,9 +19,9 @@
     <tx:annotation-driven />
     
     <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
-        <property name="driverClassName" value="org.h2.Driver" />
-        <property name="url" value="jdbc:h2:mem:martinis;MODE=MySQL;DB_CLOSE_DELAY=-1;INIT=RUNSCRIPT FROM 'classpath:schema.sql'\;RUNSCRIPT FROM 'classpath:data.sql'" />
-        <property name="username" value="sa" />
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost:3306/martinis?serverTimezone=EST" />
+        <property name="username" value="root" />
         <property name="password" value="" />
         <property name="initialSize" value="5" />
         <property name="maxTotal" value="10" />
