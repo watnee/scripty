@@ -5,33 +5,28 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Scripty - Edit Project</title>
-        <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://unpkg.com/missing.css@1.1.3/dist/missing.min.css">
+        <link href="${pageContext.request.contextPath}/css/martinis.css" rel="stylesheet">
         <link rel="shortcut icon" href="${pageContext.request.contextPath}/favicon.ico" type="image/x-icon">
     </head>
     <body hx-boost="true">
         <jsp:include page="../includes/nav.jsp" />
-        <div class="container">
+        <main>
             <jsp:include page="../includes/logout.jsp" />
-            <div class="page-header">
-                <h1>Edit Project</h1>
-            </div>
-            <sf:form class="form-horizontal" action="${pageContext.request.contextPath}/project/edit" method="post" modelAttribute="commandModel">
+            <h1>Edit Project</h1>
+            <sf:form action="${pageContext.request.contextPath}/project/edit" method="post" modelAttribute="commandModel">
                 <sf:hidden path="id" />
-                <div class="form-group">
-                    <label for="title" class="col-md-2 control-label">Title:</label>
-                    <div class="col-md-10">
-                        <sf:input type="text" class="form-control" spellcheck="true" path="title" />
-                        <sf:errors path="title" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <a href="${pageContext.request.contextPath}/project/show?id=${viewModel.id}" class="btn btn-default" role="button">Cancel</a>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                </div>
+                <label>
+                    Title
+                    <sf:input type="text" spellcheck="true" path="title" />
+                    <sf:errors path="title" />
+                </label>
+                <p>
+                    <a href="${pageContext.request.contextPath}/project/show?id=${viewModel.id}" role="button">Cancel</a>
+                    <button type="submit">Submit</button>
+                </p>
             </sf:form>
-        </div>
+        </main>
         <script src="${pageContext.request.contextPath}/js/htmx.min.js"></script>
     </body>
 </html>

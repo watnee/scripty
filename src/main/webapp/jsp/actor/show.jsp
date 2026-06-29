@@ -5,24 +5,24 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Scripty - Actor Profile</title>
-        <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://unpkg.com/missing.css@1.1.3/dist/missing.min.css">
         <link href="${pageContext.request.contextPath}/css/martinis.css" rel="stylesheet">
         <link rel="shortcut icon" href="${pageContext.request.contextPath}/favicon.ico" type="image/x-icon">
     </head>
     <body hx-boost="true">
         <jsp:include page="../includes/nav.jsp" />
-        <div class="container">
+        <main>
             <jsp:include page="../includes/logout.jsp" />
-            <ol class="breadcrumb">
-                <li><a href="${pageContext.request.contextPath}/actor/list">Casting</a></li>
-                <li class="active">${viewModel.first} ${viewModel.last}</li>
-            </ol>
-            <div class="page-header">
-                <h1>${viewModel.first} ${viewModel.last} <small><a href="${pageContext.request.contextPath}/actor/edit?id=${viewModel.id}" class="btn btn-default btn-xs" role="button">edit</a> <a href="${pageContext.request.contextPath}/actor/delete?id=${viewModel.id}" class="btn btn-default btn-xs" role="button" hx-confirm="Are you sure you want to delete this actor?">delete</a></small></h1>
-            </div>
+            <nav aria-label="Breadcrumb">
+                <ol>
+                    <li><a href="${pageContext.request.contextPath}/actor/list">Casting</a></li>
+                    <li aria-current="page">${viewModel.first} ${viewModel.last}</li>
+                </ol>
+            </nav>
+            <h1>${viewModel.first} ${viewModel.last} <small><a href="${pageContext.request.contextPath}/actor/edit?id=${viewModel.id}" role="button">edit</a> <a href="${pageContext.request.contextPath}/actor/delete?id=${viewModel.id}" role="button" hx-confirm="Are you sure you want to delete this actor?">delete</a></small></h1>
             <p>Phone: ${viewModel.phone}</p>
             <p>Email: ${viewModel.email}</p>
-        </div>
+        </main>
         <script src="${pageContext.request.contextPath}/js/htmx.min.js"></script>
     </body>
 </html>

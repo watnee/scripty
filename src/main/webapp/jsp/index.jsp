@@ -5,22 +5,21 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Scripty</title>
-        <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://unpkg.com/missing.css@1.1.3/dist/missing.min.css">
+        <link href="${pageContext.request.contextPath}/css/martinis.css" rel="stylesheet">
         <link rel="shortcut icon" href="${pageContext.request.contextPath}/favicon.ico" type="image/x-icon">
     </head>
     <body hx-boost="true">
         <jsp:include page="includes/nav.jsp">
             <jsp:param name="page" value="index" />
         </jsp:include>
-        <div class="container">
-            <div class="page-header">
-                <h1>Scripty</h1>
-            </div>
+        <main>
+            <h1>Scripty</h1>
             <p>Welcome!</p>
             <c:if test="${pageContext.request.userPrincipal.name == null}">
-                <p><a href="${pageContext.request.contextPath}/login" class="btn btn-primary" role="button">Login</a></p>
+                <p><a href="${pageContext.request.contextPath}/login" role="button">Login</a></p>
             </c:if>
-        </div>
+        </main>
         <script src="${pageContext.request.contextPath}/js/htmx.min.js"></script>
     </body>
 </html>

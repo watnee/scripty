@@ -5,60 +5,58 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Scripty - Project Profile</title>
-        <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://unpkg.com/missing.css@1.1.3/dist/missing.min.css">
         <link href="${pageContext.request.contextPath}/css/martinis.css" rel="stylesheet">
         <link rel="shortcut icon" href="${pageContext.request.contextPath}/favicon.ico" type="image/x-icon">
     </head>
     <body hx-boost="true">
         <jsp:include page="../includes/nav.jsp" />
-        <div class="container">
+        <main>
             <jsp:include page="../includes/logout.jsp" />
-            <ol class="breadcrumb">
-                <li><a href="${pageContext.request.contextPath}/project/list">Projects</a></li>
-                <li class="active">${viewModel.title}</li>
-            </ol>
-            <div class="page-header">
-                <h1>${viewModel.title} <small><a href="${pageContext.request.contextPath}/project/edit?id=${viewModel.id}" class="btn btn-default btn-xs" role="button">edit</a> <a href="${pageContext.request.contextPath}/project/delete?id=${viewModel.id}" class="btn btn-default btn-xs" role="button" hx-confirm="Are you sure you want to delete this project?">delete</a></small></h1>
-            </div>
-            <div class="row">
-                <div class="col-md-9">
+            <nav aria-label="Breadcrumb">
+                <ol>
+                    <li><a href="${pageContext.request.contextPath}/project/list">Projects</a></li>
+                    <li aria-current="page">${viewModel.title}</li>
+                </ol>
+            </nav>
+            <h1>${viewModel.title} <small><a href="${pageContext.request.contextPath}/project/edit?id=${viewModel.id}" role="button">edit</a> <a href="${pageContext.request.contextPath}/project/delete?id=${viewModel.id}" role="button" hx-confirm="Are you sure you want to delete this project?">delete</a></small></h1>
+            <div class="f-row" style="gap: 2rem; align-items: start">
+                <div style="flex: 3">
                     <h2>Scenes</h2>
-                    <table id="table-scenes" class="table table-hover">
+                    <table id="table-scenes">
                         <c:forEach items="${viewModel.scenes}" var="scene" varStatus="loop">
                             <tr>
-                                <td><a href="${pageContext.request.contextPath}/scene/show?id=${scene.id}" class="text-uppercase">${scene.name}</a></td>
+                                <td><a href="${pageContext.request.contextPath}/scene/show?id=${scene.id}" style="text-transform: uppercase">${scene.name}</a></td>
                                 <td>
-                                    <div class="nowrap">
+                                    <span class="nowrap">
                                         <c:if test="${not loop.last}">
-                                            <a href="${pageContext.request.contextPath}/scene/moveDown?id=${scene.id}" class="btn btn-default btn-xs move-down" role="button">↓</a>
+                                            <a href="${pageContext.request.contextPath}/scene/moveDown?id=${scene.id}" class="move-down" role="button">&#8595;</a>
                                         </c:if>
                                         <c:if test="${not loop.first}">
-                                            <a href="${pageContext.request.contextPath}/scene/moveUp?id=${scene.id}" class="btn btn-default btn-xs move-up" role="button">↑</a>
+                                            <a href="${pageContext.request.contextPath}/scene/moveUp?id=${scene.id}" class="move-up" role="button">&#8593;</a>
                                         </c:if>
-                                    </div>
+                                    </span>
                                 </td>
                             </tr>
                         </c:forEach>
                     </table>
-                    <p><a href="${pageContext.request.contextPath}/scene/create?projectId=${viewModel.id}" class="btn btn-primary" role="button">Create New Scene</a></p>
+                    <p><a href="${pageContext.request.contextPath}/scene/create?projectId=${viewModel.id}" role="button">Create New Scene</a></p>
                 </div>
-                <div class="col-md-3">
+                <aside style="flex: 1">
                     <c:if test="${not empty viewModel.persons}">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Characters</h3>
-                            </div>
-                            <ul class="list-group">
+                        <details open>
+                            <summary><strong>Characters</strong></summary>
+                            <ul>
                             <c:forEach items="${viewModel.persons}" var="character">
-                                <li class="list-group-item"><a href="${pageContext.request.contextPath}/character/show?id=${character.id}">${character.name}</a></li>
+                                <li><a href="${pageContext.request.contextPath}/character/show?id=${character.id}">${character.name}</a></li>
                             </c:forEach>
                             </ul>
-                        </div>
+                        </details>
                     </c:if>
-                    <a href="${pageContext.request.contextPath}/character/create?projectId=${viewModel.id}" class="btn btn-primary" role="button">Create New Character</a>
-                </div>
+                    <p><a href="${pageContext.request.contextPath}/character/create?projectId=${viewModel.id}" role="button">Create New Character</a></p>
+                </aside>
             </div>
-        </div>
+        </main>
         <script src="${pageContext.request.contextPath}/js/htmx.min.js"></script>
     </body>
 </html>

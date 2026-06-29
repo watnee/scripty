@@ -1,7 +1,3 @@
-.mb-0 {
-    margin-bottom: 0 !important;
-}
-
 .nowrap {
     white-space: nowrap;
 }
@@ -10,7 +6,8 @@
 #table-projects a,
 #table-scenes a,
 #table-blocks a.character-name {
-    color: #000;
+    color: inherit;
+    text-decoration: none;
 }
 
 #table-actors td,
@@ -25,25 +22,31 @@
     width: 99%;
 }
 
-.page-header small a,
-#table-scenes .btn,
-#table-blocks .btn {
+h1 > small a[role="button"],
+#table-scenes a[role="button"],
+#table-blocks a[role="button"] {
     opacity: 0;
+    font-size: 0.5em;
 }
 
-.page-header small a:focus,
-.page-header:hover small a,
-#table-scenes tr .btn:focus,
-#table-scenes tr:hover .btn,
-#table-blocks tr .btn:focus,
-#table-blocks tr:hover .btn {
+h1 > small a[role="button"]:focus,
+h1:hover > small a[role="button"],
+#table-scenes tr a[role="button"]:focus,
+#table-scenes tr:hover a[role="button"],
+#table-blocks tr a[role="button"]:focus,
+#table-blocks tr:hover a[role="button"] {
     opacity: 1;
 }
 
-#table-blocks tr:first-child .btn.create-below,
-#table-scenes tr:last-child .btn.move-up,
-#table-blocks tr:last-child .btn.move-up {
+#table-blocks tr:first-child .create-below,
+#table-scenes tr:last-child .move-up,
+#table-blocks tr:last-child .move-up {
     margin-left: 22px;
+}
+
+.scene-pager {
+    display: flex;
+    justify-content: space-between;
 }
 
 .htmx-settling body {

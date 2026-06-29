@@ -5,7 +5,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Scripty - Casting</title>
-        <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://unpkg.com/missing.css@1.1.3/dist/missing.min.css">
         <link href="${pageContext.request.contextPath}/css/martinis.css" rel="stylesheet">
         <link rel="shortcut icon" href="${pageContext.request.contextPath}/favicon.ico" type="image/x-icon">
     </head>
@@ -13,23 +13,23 @@
         <jsp:include page="../includes/nav.jsp">
             <jsp:param name="page" value="casting" />
         </jsp:include>
-        <div class="container">
+        <main>
             <jsp:include page="../includes/logout.jsp" />
-            <ol class="breadcrumb">
-                <li class="active">Casting</li>
-            </ol>
-            <div class="page-header">
-                <h1>Casting</h1>
-            </div>
-            <table id="table-actors" class="table table-hover">
+            <nav aria-label="Breadcrumb">
+                <ol>
+                    <li aria-current="page">Casting</li>
+                </ol>
+            </nav>
+            <h1>Casting</h1>
+            <table id="table-actors">
                 <c:forEach items="${viewModel.actors}" var="actor">
                     <tr>
-                        <td><a href="${pageContext.request.contextPath}/actor/show?id=${actor.id}">${actor.first} ${actor.last}</a></td>  
+                        <td><a href="${pageContext.request.contextPath}/actor/show?id=${actor.id}">${actor.first} ${actor.last}</a></td>
                     </tr>
                 </c:forEach>
             </table>
-            <a href="${pageContext.request.contextPath}/actor/create" class="btn btn-primary" role="button">Create New Actor</a>
-        </div>
+            <p><a href="${pageContext.request.contextPath}/actor/create" role="button">Create New Actor</a></p>
+        </main>
         <script src="${pageContext.request.contextPath}/js/htmx.min.js"></script>
     </body>
 </html>

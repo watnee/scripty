@@ -5,7 +5,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Scripty - Projects</title>
-        <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://unpkg.com/missing.css@1.1.3/dist/missing.min.css">
         <link href="${pageContext.request.contextPath}/css/martinis.css" rel="stylesheet">
         <link rel="shortcut icon" href="${pageContext.request.contextPath}/favicon.ico" type="image/x-icon">
     </head>
@@ -13,23 +13,23 @@
         <jsp:include page="../includes/nav.jsp">
             <jsp:param name="page" value="projects" />
         </jsp:include>
-        <div class="container">
+        <main>
             <jsp:include page="../includes/logout.jsp" />
-            <ol class="breadcrumb">
-                <li class="active">Projects</li>
-            </ol>
-            <div class="page-header">
-                <h1>Projects</h1>
-            </div>
-            <table id="table-projects" class="table table-hover">
+            <nav aria-label="Breadcrumb">
+                <ol>
+                    <li aria-current="page">Projects</li>
+                </ol>
+            </nav>
+            <h1>Projects</h1>
+            <table id="table-projects">
                 <c:forEach items="${viewModel.projects}" var="project">
                     <tr>
                         <td><a href="${pageContext.request.contextPath}/project/show?id=${project.id}">${project.title}</a></td>
                     </tr>
                 </c:forEach>
             </table>
-            <a href="${pageContext.request.contextPath}/project/create" class="btn btn-primary" role="button">Create New Project</a>
-        </div>
+            <p><a href="${pageContext.request.contextPath}/project/create" role="button">Create New Project</a></p>
+        </main>
         <script src="${pageContext.request.contextPath}/js/htmx.min.js"></script>
     </body>
 </html>
