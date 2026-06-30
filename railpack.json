@@ -1,10 +1,4 @@
 {
   "$schema": "https://schema.railpack.com",
-  "provider": "java",
-  "packages": {
-    "java": "17"
-  },
-  "deploy": {
-    "startCommand": "java $JAVA_OPTS -jar target/scripty.jar --server.port=${PORT:-8080} --spring.profiles.active=prod"
-  }
+  "provider": "dockerfile"
 }
