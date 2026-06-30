@@ -22,7 +22,13 @@
         <table id="table-blocks">
             <tr th:each="block,loop : ${viewModel.blocks}" draggable="true" th:attr="data-block-id=${block.id},data-block-order=${block.order}">
                 <td class="block-left-controls">
-                    <a th:attr="hx-get=@{/block/createBelowInline(id=${block.id})}" hx-target="closest tr" hx-swap="afterend" hx-boost="false" class="create-below" role="button">+</a>
+                    <div class="add-dropdown">
+                        <button type="button" class="create-below">+</button>
+                        <div class="add-dropdown-menu">
+                            <a th:attr="hx-get=@{/block/createBelowInline(id=${block.id})}" hx-target="closest tr" hx-swap="afterend" hx-boost="false">Add Block</a>
+                            <a th:href="@{/character/create(projectId=${viewModel.projectId})}">New Character</a>
+                        </div>
+                    </div>
                     <span class="drag-handle" title="Drag to reorder">&#8942;&#8942;</span>
                 </td>
                 <td class="block-content" th:attr="hx-get=@{/block/editInline(id=${block.id})}" hx-trigger="click[!event.target.closest('a')&amp;&amp;!event.target.closest('form')]" hx-swap="innerHTML">
@@ -52,6 +58,28 @@
     </main>
     <script src="https://unpkg.com/htmx.org@2.0.4"></script>
     <script th:src="@{/js/_hyperscript.min.js}"></script>
+    <script>
+    (function() {
+        document.addEventListener('click', function(e) {
+            var btn = e.target.closest('.add-dropdown > .create-below');
+            if (btn) {
+                e.preventDefault();
+                e.stopPropagation();
+                var dropdown = btn.closest('.add-dropdown');
+                var wasOpen = dropdown.classList.contains('open');
+                document.querySelectorAll('.add-dropdown.open').forEach(function(el) { el.classList.remove('open'); });
+                if (!wasOpen) dropdown.classList.add('open');
+                return;
+            }
+            var menuItem = e.target.closest('.add-dropdown-menu a');
+            if (menuItem) {
+                document.querySelectorAll('.add-dropdown.open').forEach(function(el) { el.classList.remove('open'); });
+                return;
+            }
+            document.querySelectorAll('.add-dropdown.open').forEach(function(el) { el.classList.remove('open'); });
+        });
+    })();
+    </script>
     <script th:inline="javascript">
     (function() {
         var table = document.getElementById('table-blocks');

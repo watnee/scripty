@@ -59,6 +59,7 @@ public class BlockServiceImpl implements BlockService {
 
         List<Person> persons = personRepository.findByProjectIdOrderByNameAsc(project.getId());
         vm.setSceneId(scene.getId());
+        vm.setProjectId(project.getId());
         vm.setPersons(translateCreatePersonViewModel(persons));
         return vm;
     }
@@ -77,6 +78,7 @@ public class BlockServiceImpl implements BlockService {
 
         List<Person> persons = personRepository.findByProjectIdOrderByNameAsc(project.getId());
         vm.setSceneId(scene.getId());
+        vm.setProjectId(project.getId());
         vm.setPersons(translateCreatePersonViewModel(persons));
         return vm;
     }

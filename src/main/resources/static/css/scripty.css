@@ -64,12 +64,55 @@ main.home {
 }
 
 #table-blocks td.block-left-controls a.create-below[role="button"],
-.table-blocks-all td.block-left-controls a.create-below[role="button"] {
+.table-blocks-all td.block-left-controls a.create-below[role="button"],
+#table-blocks td.block-left-controls button.create-below,
+.table-blocks-all td.block-left-controls button.create-below {
     display: inline !important;
     font-size: 1em;
     opacity: 1;
     padding: 0.1em 0.3em;
     min-width: 0;
+    background: none;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.add-dropdown {
+    display: inline-block;
+    position: relative;
+}
+
+.add-dropdown-menu {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    z-index: 10;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    min-width: 130px;
+    padding: 0.25em 0;
+}
+
+.add-dropdown-menu a {
+    display: block;
+    padding: 0.35em 0.75em;
+    white-space: nowrap;
+    text-decoration: none;
+    color: inherit;
+    font-size: 0.85em;
+}
+
+.add-dropdown-menu a:hover {
+    background: #f0f0f0;
+}
+
+.add-dropdown.open .add-dropdown-menu {
+    display: block;
 }
 
 #table-blocks .block-left-controls .drag-handle,

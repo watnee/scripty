@@ -15,8 +15,9 @@ import java.util.List;
 public class CreateBlockViewModel {
     
     private int sceneId;
+    private int projectId;
     private List<CreatePersonViewModel> persons;
-    
+
     // Specifically to handle redisplaying when validation errors happen
     private CreateBlockCommandModel createBlockCommandModel;
 
@@ -34,6 +35,14 @@ public class CreateBlockViewModel {
 
     public void setSceneId(int sceneId) {
         this.sceneId = sceneId;
+    }
+
+    public int getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
     }
 
     public List<CreatePersonViewModel> getPersons() {
