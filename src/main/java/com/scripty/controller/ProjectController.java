@@ -13,7 +13,6 @@ import com.scripty.viewmodel.project.editproject.EditProjectViewModel;
 import com.scripty.viewmodel.project.projectlist.ProjectListViewModel;
 import com.scripty.viewmodel.project.projectprofile.ProjectProfileViewModel;
 import com.scripty.commandmodel.scene.createscene.CreateSceneCommandModel;
-import com.scripty.dto.Scene;
 import com.scripty.service.ProjectService;
 import com.scripty.service.SceneService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -128,8 +127,8 @@ public class ProjectController {
         CreateSceneCommandModel sceneCommandModel = new CreateSceneCommandModel();
         sceneCommandModel.setProjectId(project.getId());
         sceneCommandModel.setName(" ");
-        Scene scene = sceneService.saveCreateSceneCommandModel(sceneCommandModel);
+        sceneService.saveCreateSceneCommandModel(sceneCommandModel);
 
-        return "redirect:/scene/show?id=" + scene.getId();
+        return "redirect:/project/show?id=" + project.getId();
     }
 }
