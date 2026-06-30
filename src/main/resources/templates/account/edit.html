@@ -34,10 +34,17 @@
                 <input type="text" th:field="*{lastName}" />
                 <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
             </label>
-            <label>
-                <input type="checkbox" th:field="*{admin}" />
-                Admin
-            </label>
+            <fieldset>
+                <legend>Admin</legend>
+                <label>
+                    <input type="radio" th:field="*{admin}" value="true" />
+                    Yes
+                </label>
+                <label>
+                    <input type="radio" th:field="*{admin}" value="false" />
+                    No
+                </label>
+            </fieldset>
             <p>
                 <a th:href="@{/account/list}" role="button">Cancel</a>
                 <button type="submit">Submit</button>
