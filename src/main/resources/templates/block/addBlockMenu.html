@@ -1,0 +1,8 @@
+<div xmlns:th="http://www.thymeleaf.org" class="add-block-menu" _="on click elsewhere remove me">
+    <a th:if="${blockId != null}" th:attr="hx-get=@{/block/createBelowInline(id=${blockId})}" hx-target="closest tr" hx-swap="afterend" hx-boost="false" _="on click remove closest .add-block-menu">Action</a>
+    <a th:if="${blockId == null}" th:attr="hx-get=@{/block/createInline(sceneId=${sceneId})}" hx-target="closest tr" hx-swap="afterend" hx-boost="false" _="on click remove closest .add-block-menu">Action</a>
+    <th:block th:each="person : ${persons}">
+        <a th:if="${blockId != null}" th:attr="hx-get=@{/block/createBelowInline(id=${blockId},personId=${person.id})}" hx-target="closest tr" hx-swap="afterend" hx-boost="false" _="on click remove closest .add-block-menu" th:text="${person.name}" style="text-transform: uppercase"></a>
+        <a th:if="${blockId == null}" th:attr="hx-get=@{/block/createInline(sceneId=${sceneId},personId=${person.id})}" hx-target="closest tr" hx-swap="afterend" hx-boost="false" _="on click remove closest .add-block-menu" th:text="${person.name}" style="text-transform: uppercase"></a>
+    </th:block>
+</div>

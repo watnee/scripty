@@ -185,9 +185,20 @@ public class BlockController {
     }
 
     @RequestMapping(value = "/createInline")
-    public String createInline(@RequestParam Integer sceneId, Model model) {
+    public String createInline(@RequestParam Integer sceneId,
+                               @RequestParam(required = false) Integer personId,
+                               Model model) {
         CreateBlockViewModel viewModel = blockService.getCreateBlockViewModel(sceneId);
         model.addAttribute("viewModel", viewModel);
+        if (personId != null) {
+            model.addAttribute("personId", personId);
+            for (com.scripty.viewmodel.block.createblock.CreatePersonViewModel p : viewModel.getPersons()) {
+                if (p.getId() == personId) {
+                    model.addAttribute("personName", p.getName());
+                    break;
+                }
+            }
+        }
         return "block/createInline";
     }
 
@@ -206,11 +217,39 @@ public class BlockController {
         return "block/blockRowWithCreate";
     }
 
+    @RequestMapping(value = "/addBlockMenu")
+    public String addBlockMenu(@RequestParam(required = false) Integer id,
+                               @RequestParam(required = false) Integer sceneId,
+                               Model model) {
+        if (id != null) {
+            CreateBlockBelowViewModel vm = blockService.getCreateBlockBelowViewModel(id);
+            model.addAttribute("blockId", id);
+            model.addAttribute("sceneId", vm.getSceneId());
+            model.addAttribute("persons", vm.getPersons());
+        } else {
+            CreateBlockViewModel vm = blockService.getCreateBlockViewModel(sceneId);
+            model.addAttribute("sceneId", sceneId);
+            model.addAttribute("persons", vm.getPersons());
+        }
+        return "block/addBlockMenu";
+    }
+
     @RequestMapping(value = "/createBelowInline")
-    public String createBelowInline(@RequestParam Integer id, Model model) {
+    public String createBelowInline(@RequestParam Integer id,
+                                    @RequestParam(required = false) Integer personId,
+                                    Model model) {
         CreateBlockBelowViewModel viewModel = blockService.getCreateBlockBelowViewModel(id);
         model.addAttribute("viewModel", viewModel);
         model.addAttribute("blockId", id);
+        if (personId != null) {
+            model.addAttribute("personId", personId);
+            for (com.scripty.viewmodel.block.createblock.CreatePersonViewModel p : viewModel.getPersons()) {
+                if (p.getId() == personId) {
+                    model.addAttribute("personName", p.getName());
+                    break;
+                }
+            }
+        }
         return "block/createBelowInline";
     }
 
