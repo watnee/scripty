@@ -19,6 +19,7 @@ public class EditUserCommandModel {
     @Size(max = 30, message = "Last Name must be no more than 30 characters in length.")
     private String lastName;
     private boolean admin;
+    private boolean producer;
 
     public Integer getId() {
         return id;
@@ -66,5 +67,13 @@ public class EditUserCommandModel {
 
     public void setAdmin(boolean admin) {
         this.admin = admin;
+    }
+
+    public boolean isProducer() {
+        return producer;
+    }
+
+    public void setProducer(boolean producer) {
+        this.producer = producer;
     }
 }
