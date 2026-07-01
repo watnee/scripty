@@ -8,6 +8,7 @@ import com.scripty.repository.AuthorityRepository;
 import com.scripty.repository.UserRepository;
 import com.scripty.viewmodel.user.createuser.CreateUserViewModel;
 import com.scripty.viewmodel.user.edituser.EditUserViewModel;
+import com.scripty.viewmodel.user.accountprofile.AccountProfileViewModel;
 import com.scripty.viewmodel.user.userlist.UserListViewModel;
 import com.scripty.viewmodel.user.userlist.UserViewModel;
 import java.util.ArrayList;
@@ -42,8 +43,13 @@ public class UserServiceImpl implements UserService {
         if (user.isAdmin()) {
             authorityRepository.save(new Authority(user.getUsername(), "ROLE_ADMIN"));
         }
+<<<<<<< HEAD
         if (user.isDirector()) {
             authorityRepository.save(new Authority(user.getUsername(), "ROLE_DIRECTOR"));
+=======
+        if (user.isProducer()) {
+            authorityRepository.save(new Authority(user.getUsername(), "ROLE_PRODUCER"));
+>>>>>>> origin/master
         }
         return saved;
     }
@@ -54,7 +60,21 @@ public class UserServiceImpl implements UserService {
         if (user != null) {
             List<Authority> authorities = authorityRepository.findByUsername(user.getUsername());
             user.setAdmin(authorities.stream().anyMatch(a -> "ROLE_ADMIN".equals(a.getAuthority())));
+<<<<<<< HEAD
             user.setDirector(authorities.stream().anyMatch(a -> "ROLE_DIRECTOR".equals(a.getAuthority())));
+=======
+            user.setProducer(authorities.stream().anyMatch(a -> "ROLE_PRODUCER".equals(a.getAuthority())));
+        }
+        return user;
+    }
+
+    @Override
+    public User readByUsername(String username) {
+        User user = userRepository.findByUsername(username).orElse(null);
+        if (user != null) {
+            List<Authority> authorities = authorityRepository.findByUsername(user.getUsername());
+            user.setAdmin(authorities.stream().anyMatch(a -> "ROLE_ADMIN".equals(a.getAuthority())));
+>>>>>>> origin/master
         }
         return user;
     }
@@ -68,6 +88,7 @@ public class UserServiceImpl implements UserService {
         existing.setEnabled(user.isEnabled());
         existing.setFirstName(user.getFirstName());
         existing.setLastName(user.getLastName());
+        existing.setTeam(user.getTeam());
         if (user.getPassword() != null && !user.getPassword().isEmpty()) {
             existing.setPassword(passwordEncoder.encode(user.getPassword()));
         }
@@ -77,8 +98,13 @@ public class UserServiceImpl implements UserService {
         if (user.isAdmin()) {
             authorityRepository.save(new Authority(user.getUsername(), "ROLE_ADMIN"));
         }
+<<<<<<< HEAD
         if (user.isDirector()) {
             authorityRepository.save(new Authority(user.getUsername(), "ROLE_DIRECTOR"));
+=======
+        if (user.isProducer()) {
+            authorityRepository.save(new Authority(user.getUsername(), "ROLE_PRODUCER"));
+>>>>>>> origin/master
         }
     }
 
@@ -95,7 +121,11 @@ public class UserServiceImpl implements UserService {
         for (User user : users) {
             List<Authority> authorities = authorityRepository.findByUsername(user.getUsername());
             user.setAdmin(authorities.stream().anyMatch(a -> "ROLE_ADMIN".equals(a.getAuthority())));
+<<<<<<< HEAD
             user.setDirector(authorities.stream().anyMatch(a -> "ROLE_DIRECTOR".equals(a.getAuthority())));
+=======
+            user.setProducer(authorities.stream().anyMatch(a -> "ROLE_PRODUCER".equals(a.getAuthority())));
+>>>>>>> origin/master
         }
         return users;
     }
@@ -111,9 +141,14 @@ public class UserServiceImpl implements UserService {
             uvm.setUsername(user.getUsername());
             uvm.setFirstName(user.getFirstName());
             uvm.setLastName(user.getLastName());
+            uvm.setTeam(user.getTeam());
             uvm.setEnabled(user.isEnabled());
             uvm.setAdmin(user.isAdmin());
+<<<<<<< HEAD
             uvm.setDirector(user.isDirector());
+=======
+            uvm.setProducer(user.isProducer());
+>>>>>>> origin/master
             userViewModels.add(uvm);
         }
         vm.setUsers(userViewModels);
@@ -137,8 +172,13 @@ public class UserServiceImpl implements UserService {
         commandModel.setUsername(user.getUsername());
         commandModel.setFirstName(user.getFirstName());
         commandModel.setLastName(user.getLastName());
+        commandModel.setTeam(user.getTeam());
         commandModel.setAdmin(user.isAdmin());
+<<<<<<< HEAD
         commandModel.setDirector(user.isDirector());
+=======
+        commandModel.setProducer(user.isProducer());
+>>>>>>> origin/master
         vm.setEditUserCommandModel(commandModel);
         return vm;
     }
@@ -150,9 +190,14 @@ public class UserServiceImpl implements UserService {
         user.setPassword(cmd.getPassword());
         user.setFirstName(cmd.getFirstName());
         user.setLastName(cmd.getLastName());
+        user.setTeam(cmd.getTeam());
         user.setEnabled(true);
         user.setAdmin(cmd.isAdmin());
+<<<<<<< HEAD
         user.setDirector(cmd.isDirector());
+=======
+        user.setProducer(cmd.isProducer());
+>>>>>>> origin/master
         return create(user);
     }
 
@@ -163,8 +208,13 @@ public class UserServiceImpl implements UserService {
         user.setPassword(cmd.getPassword());
         user.setFirstName(cmd.getFirstName());
         user.setLastName(cmd.getLastName());
+        user.setTeam(cmd.getTeam());
         user.setAdmin(cmd.isAdmin());
+<<<<<<< HEAD
         user.setDirector(cmd.isDirector());
+=======
+        user.setProducer(cmd.isProducer());
+>>>>>>> origin/master
         update(user);
         return user;
     }
@@ -175,5 +225,19 @@ public class UserServiceImpl implements UserService {
         User user = read(id);
         delete(user);
         return user;
+    }
+
+    @Override
+    public AccountProfileViewModel getAccountProfileViewModel(Integer id) {
+        User user = read(id);
+        AccountProfileViewModel vm = new AccountProfileViewModel();
+        vm.setId(user.getId());
+        vm.setUsername(user.getUsername());
+        vm.setFirstName(user.getFirstName());
+        vm.setLastName(user.getLastName());
+        vm.setTeam(user.getTeam());
+        vm.setEnabled(user.isEnabled());
+        vm.setAdmin(user.isAdmin());
+        return vm;
     }
 }

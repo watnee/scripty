@@ -1,6 +1,6 @@
-package com.scripty.viewmodel.user.userlist;
+package com.scripty.viewmodel.user.accountprofile;
 
-public class UserViewModel {
+public class AccountProfileViewModel {
 
     private int id;
     private String username;
@@ -9,11 +9,6 @@ public class UserViewModel {
     private String team;
     private boolean enabled;
     private boolean admin;
-<<<<<<< HEAD
-    private boolean director;
-=======
-    private boolean producer;
->>>>>>> origin/master
 
     public int getId() {
         return id;
@@ -70,22 +65,4 @@ public class UserViewModel {
     public void setAdmin(boolean admin) {
         this.admin = admin;
     }
-
-<<<<<<< HEAD
-    public boolean isDirector() {
-        return director;
-    }
-
-    public void setDirector(boolean director) {
-        this.director = director;
-=======
-    public boolean isProducer() {
-        return producer;
-    }
-
-    public void setProducer(boolean producer) {
-        this.producer = producer;
->>>>>>> origin/master
-    }
-
 }

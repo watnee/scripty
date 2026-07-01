@@ -31,11 +31,18 @@ public class User {
     @Column(name = "last_name", nullable = false, length = 30)
     private String lastName;
 
+    @Column(length = 50)
+    private String team;
+
     @Transient
     private boolean admin;
 
     @Transient
+<<<<<<< HEAD
     private boolean director;
+=======
+    private boolean producer;
+>>>>>>> origin/master
 
     public Integer getId() {
         return id;
@@ -85,6 +92,14 @@ public class User {
         this.lastName = lastName;
     }
 
+    public String getTeam() {
+        return team;
+    }
+
+    public void setTeam(String team) {
+        this.team = team;
+    }
+
     public boolean isAdmin() {
         return admin;
     }
@@ -93,11 +108,20 @@ public class User {
         this.admin = admin;
     }
 
+<<<<<<< HEAD
     public boolean isDirector() {
         return director;
     }
 
     public void setDirector(boolean director) {
         this.director = director;
+=======
+    public boolean isProducer() {
+        return producer;
+    }
+
+    public void setProducer(boolean producer) {
+        this.producer = producer;
+>>>>>>> origin/master
     }
 }
