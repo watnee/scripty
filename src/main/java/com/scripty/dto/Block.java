@@ -24,6 +24,9 @@ public class Block {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
+    @Column(name = "font")
+    private String font;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "person_id")
     private Person person;
@@ -54,6 +57,14 @@ public class Block {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getFont() {
+        return font;
+    }
+
+    public void setFont(String font) {
+        this.font = font;
     }
 
     public Person getPerson() {

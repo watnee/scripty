@@ -29,6 +29,10 @@
                     <p th:if="${not #strings.isEmpty(block.personName)}" style="margin-bottom: 0; text-align: center">
                         <a th:href="@{/character/show(id=${block.personId})}" class="character-name" style="text-transform: uppercase" th:text="${block.personName}"></a>
                     </p>
+                    <p th:if="${not #strings.isEmpty(block.content)}"
+                       class="block-text"
+                       th:classappend="${block.font == 'COURIER_PRIME'} ? ' font-courier-prime' : (${block.font == 'ARIAL'} ? ' font-arial' : (${block.font == 'TIMES_NEW_ROMAN'} ? ' font-times-new-roman' : ''))"
+                       th:text="${block.content}"></p>
                 </td>
                 <td>
                     <span class="nowrap">

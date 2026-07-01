@@ -19,12 +19,18 @@ import com.scripty.viewmodel.block.editblock.EditPersonViewModel;
 import com.scripty.viewmodel.scene.sceneprofile.BlockViewModel;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class BlockServiceImpl implements BlockService {
+    private static final Set<String> ALLOWED_FONTS = Set.of(
+        "COURIER_PRIME",
+        "ARIAL",
+        "TIMES_NEW_ROMAN"
+    );
 
     private final BlockRepository blockRepository;
     private final PersonRepository personRepository;
@@ -102,6 +108,7 @@ public class BlockServiceImpl implements BlockService {
         EditBlockCommandModel commandModel = new EditBlockCommandModel();
         commandModel.setId(existingBlock.getId());
         commandModel.setContent(existingBlock.getContent());
+        commandModel.setFont(normalizeFont(existingBlock.getFont()));
         if (existingBlock.getPerson() != null) {
             commandModel.setPersonId(existingBlock.getPerson().getId());
         }
@@ -117,6 +124,7 @@ public class BlockServiceImpl implements BlockService {
         vm.setId(block.getId());
         vm.setOrder(block.getOrder());
         vm.setContent(block.getContent());
+        vm.setFont(normalizeFont(block.getFont()));
         if (block.getPerson() != null) {
             Person person = personRepository.findById(block.getPerson().getId()).orElse(null);
             if (person != null) {
@@ -210,6 +218,7 @@ public class BlockServiceImpl implements BlockService {
         block.setContent(content);
         block.setPerson(person);
         block.setScene(scene);
+        block.setFont(normalizeFont(cmd.getFont()));
         blockRepository.save(block);
         return block;
     }
@@ -344,5 +353,11 @@ public class BlockServiceImpl implements BlockService {
         newPerson.setFullName(characterName);
         newPerson.setProject(project);
         return personRepository.save(newPerson);
+    }
+
+    private String normalizeFont(String font) {
+        if (font == null || font.isBlank()) return null;
+        if (ALLOWED_FONTS.contains(font)) return font;
+        return null;
     }
 }

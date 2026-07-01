@@ -9,4 +9,13 @@
     </p>
     <textarea spellcheck="true" rows="1" style="width: 100%; height: 1.5em; min-height: 1.5em; padding: 0.25em;" name="content" th:text="${commandModel.content}"></textarea>
     <input type="hidden" name="personId" th:value="${commandModel.personId}" />
+    <label style="display: inline-block; margin-top: 0.5em;">
+        Font
+        <select name="font">
+            <option value="" th:selected="${#strings.isEmpty(commandModel.font)}">Default</option>
+            <option value="COURIER_PRIME" th:selected="${commandModel.font == 'COURIER_PRIME'}">Courier Prime</option>
+            <option value="ARIAL" th:selected="${commandModel.font == 'ARIAL'}">Arial</option>
+            <option value="TIMES_NEW_ROMAN" th:selected="${commandModel.font == 'TIMES_NEW_ROMAN'}">Times New Roman</option>
+        </select>
+    </label>
 </form>
