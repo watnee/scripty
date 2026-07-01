@@ -34,6 +34,9 @@ public class User {
     @Transient
     private boolean admin;
 
+    @Transient
+    private boolean actor;
+
     public Integer getId() {
         return id;
     }
@@ -88,5 +91,13 @@ public class User {
 
     public void setAdmin(boolean admin) {
         this.admin = admin;
+    }
+
+    public boolean isActor() {
+        return actor;
+    }
+
+    public void setActor(boolean actor) {
+        this.actor = actor;
     }
 }
