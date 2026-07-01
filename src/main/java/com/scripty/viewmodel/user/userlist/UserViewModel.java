@@ -8,6 +8,7 @@ public class UserViewModel {
     private String lastName;
     private boolean enabled;
     private boolean admin;
+    private boolean director;
 
     public int getId() {
         return id;
@@ -55,6 +56,14 @@ public class UserViewModel {
 
     public void setAdmin(boolean admin) {
         this.admin = admin;
+    }
+
+    public boolean isDirector() {
+        return director;
+    }
+
+    public void setDirector(boolean director) {
+        this.director = director;
     }
 
 }

@@ -18,6 +18,7 @@ public class CreateUserCommandModel {
     @Size(max = 30, message = "Last Name must be no more than 30 characters in length.")
     private String lastName;
     private boolean admin;
+    private boolean director;
 
     public String getUsername() {
         return username;
@@ -57,5 +58,13 @@ public class CreateUserCommandModel {
 
     public void setAdmin(boolean admin) {
         this.admin = admin;
+    }
+
+    public boolean isDirector() {
+        return director;
+    }
+
+    public void setDirector(boolean director) {
+        this.director = director;
     }
 }
