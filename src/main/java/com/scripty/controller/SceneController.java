@@ -14,6 +14,7 @@ import com.scripty.viewmodel.scene.createscenebelow.CreateSceneBelowViewModel;
 import com.scripty.viewmodel.scene.editscene.EditSceneViewModel;
 import com.scripty.viewmodel.scene.allscenes.AllScenesViewModel;
 import com.scripty.viewmodel.scene.sceneprofile.SceneProfileViewModel;
+import com.scripty.service.ProjectService;
 import com.scripty.service.SceneService;
 import org.springframework.beans.factory.annotation.Autowired;
 import jakarta.validation.Valid;
@@ -35,6 +36,18 @@ public class SceneController {
     
     @Autowired
     SceneService sceneService;
+
+    @Autowired
+    ProjectService projectService;
+
+    private boolean isProjectLockedForScene(Integer sceneId) {
+        Scene scene = sceneService.read(sceneId);
+        if (scene != null && scene.getProject() != null) {
+            com.scripty.dto.Project project = projectService.read(scene.getProject().getId());
+            return project != null && project.isLocked();
+        }
+        return false;
+    }
     
     @RequestMapping(value = "/show")
     public String show(@RequestParam Integer id, Model model) {
@@ -58,9 +71,11 @@ public class SceneController {
     
     @RequestMapping(value = "/delete")
     public String delete(@RequestParam Integer id) {
-        
+        if (isProjectLockedForScene(id)) {
+            Scene scene = sceneService.read(id);
+            return "redirect:/project/show?id=" + scene.getProject().getId();
+        }
         Scene scene = sceneService.deleteScene(id);
-        
         return "redirect:/project/show?id=" + scene.getProject().getId();
     }
     
@@ -95,7 +110,9 @@ public class SceneController {
     // Handle Form Submission
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public String saveEdit(@Valid @ModelAttribute("commandModel") EditSceneCommandModel commandModel, BindingResult bindingResult, Model model) {
-
+        if (isProjectLockedForScene(commandModel.getId())) {
+            return "redirect:/scene/show?id=" + commandModel.getId();
+        }
         if (bindingResult.hasErrors()) {
             EditSceneViewModel viewModel = sceneService.getEditSceneViewModel(commandModel.getId());
 
@@ -197,6 +214,11 @@ public class SceneController {
 
     @RequestMapping(value = "/editNameInline", method = RequestMethod.POST)
     public String saveEditNameInline(@Valid @ModelAttribute("commandModel") EditSceneCommandModel commandModel, BindingResult bindingResult, Model model) {
+        if (isProjectLockedForScene(commandModel.getId())) {
+            Scene scene = sceneService.read(commandModel.getId());
+            model.addAttribute("scene", scene);
+            return "scene/showNameInline";
+        }
         if (bindingResult.hasErrors()) {
             EditSceneViewModel viewModel = sceneService.getEditSceneViewModel(commandModel.getId());
             model.addAttribute("viewModel", viewModel);

@@ -71,6 +71,7 @@ public class SceneServiceImpl implements SceneService {
         if (project != null) {
             vm.setProjectId(project.getId());
             vm.setProjectTitle(project.getTitle());
+            vm.setLocked(project.isLocked());
         }
 
         if (previousScene != null) {

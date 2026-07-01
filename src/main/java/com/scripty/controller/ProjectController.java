@@ -24,6 +24,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -131,5 +132,12 @@ public class ProjectController {
         Scene scene = sceneService.saveCreateSceneCommandModel(sceneCommandModel);
 
         return "redirect:/scene/show?id=" + scene.getId();
+    }
+
+    @PreAuthorize("hasRole('WRITER') or hasRole('ADMIN')")
+    @RequestMapping(value = "/toggleLock", method = RequestMethod.POST)
+    public String toggleLock(@RequestParam Integer id) {
+        projectService.toggleLock(id);
+        return "redirect:/project/show?id=" + id;
     }
 }

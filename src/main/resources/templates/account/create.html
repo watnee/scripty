@@ -34,6 +34,10 @@
                 <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
             </label>
             <label>
+                <input type="checkbox" th:field="*{writer}" />
+                Writer
+            </label>
+            <label>
                 <input type="checkbox" th:field="*{admin}" />
                 Admin
             </label>

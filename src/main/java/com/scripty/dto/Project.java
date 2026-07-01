@@ -33,4 +33,15 @@ public class Project {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    @Column(nullable = false)
+    private boolean locked;
+
+    public boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
+    }
 }

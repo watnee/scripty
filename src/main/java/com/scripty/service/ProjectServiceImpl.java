@@ -76,6 +76,7 @@ public class ProjectServiceImpl implements ProjectService {
 
         vm.setId(project.getId());
         vm.setTitle(project.getTitle());
+        vm.setLocked(project.isLocked());
 
         List<SceneViewModel> sceneViewModels = new ArrayList<>();
         for (Scene scene : scenes) {
@@ -153,6 +154,14 @@ public class ProjectServiceImpl implements ProjectService {
     public Project deleteProject(Integer id) {
         Project project = projectRepository.findById(id).orElse(null);
         projectRepository.delete(project);
+        return project;
+    }
+
+    @Override
+    public Project toggleLock(Integer id) {
+        Project project = projectRepository.findById(id).orElse(null);
+        project.setLocked(!project.isLocked());
+        projectRepository.save(project);
         return project;
     }
 }

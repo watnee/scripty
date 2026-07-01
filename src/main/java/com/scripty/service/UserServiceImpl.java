@@ -39,6 +39,9 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         User saved = userRepository.save(user);
         authorityRepository.save(new Authority(user.getUsername(), "ROLE_USER"));
+        if (user.isWriter()) {
+            authorityRepository.save(new Authority(user.getUsername(), "ROLE_WRITER"));
+        }
         if (user.isAdmin()) {
             authorityRepository.save(new Authority(user.getUsername(), "ROLE_ADMIN"));
         }
@@ -51,6 +54,7 @@ public class UserServiceImpl implements UserService {
         if (user != null) {
             List<Authority> authorities = authorityRepository.findByUsername(user.getUsername());
             user.setAdmin(authorities.stream().anyMatch(a -> "ROLE_ADMIN".equals(a.getAuthority())));
+            user.setWriter(authorities.stream().anyMatch(a -> "ROLE_WRITER".equals(a.getAuthority())));
         }
         return user;
     }
@@ -70,6 +74,9 @@ public class UserServiceImpl implements UserService {
         userRepository.save(existing);
         authorityRepository.deleteByUsername(user.getUsername());
         authorityRepository.save(new Authority(user.getUsername(), "ROLE_USER"));
+        if (user.isWriter()) {
+            authorityRepository.save(new Authority(user.getUsername(), "ROLE_WRITER"));
+        }
         if (user.isAdmin()) {
             authorityRepository.save(new Authority(user.getUsername(), "ROLE_ADMIN"));
         }
@@ -88,6 +95,7 @@ public class UserServiceImpl implements UserService {
         for (User user : users) {
             List<Authority> authorities = authorityRepository.findByUsername(user.getUsername());
             user.setAdmin(authorities.stream().anyMatch(a -> "ROLE_ADMIN".equals(a.getAuthority())));
+            user.setWriter(authorities.stream().anyMatch(a -> "ROLE_WRITER".equals(a.getAuthority())));
         }
         return users;
     }
@@ -105,6 +113,7 @@ public class UserServiceImpl implements UserService {
             uvm.setLastName(user.getLastName());
             uvm.setEnabled(user.isEnabled());
             uvm.setAdmin(user.isAdmin());
+            uvm.setWriter(user.isWriter());
             userViewModels.add(uvm);
         }
         vm.setUsers(userViewModels);
@@ -129,6 +138,7 @@ public class UserServiceImpl implements UserService {
         commandModel.setFirstName(user.getFirstName());
         commandModel.setLastName(user.getLastName());
         commandModel.setAdmin(user.isAdmin());
+        commandModel.setWriter(user.isWriter());
         vm.setEditUserCommandModel(commandModel);
         return vm;
     }
@@ -142,6 +152,7 @@ public class UserServiceImpl implements UserService {
         user.setLastName(cmd.getLastName());
         user.setEnabled(true);
         user.setAdmin(cmd.isAdmin());
+        user.setWriter(cmd.isWriter());
         return create(user);
     }
 
@@ -153,6 +164,7 @@ public class UserServiceImpl implements UserService {
         user.setFirstName(cmd.getFirstName());
         user.setLastName(cmd.getLastName());
         user.setAdmin(cmd.isAdmin());
+        user.setWriter(cmd.isWriter());
         update(user);
         return user;
     }
