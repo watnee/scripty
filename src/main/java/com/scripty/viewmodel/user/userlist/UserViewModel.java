@@ -9,6 +9,7 @@ public class UserViewModel {
     private String team;
     private boolean enabled;
     private boolean admin;
+    private boolean producer;
 
     public int getId() {
         return id;
@@ -64,6 +65,14 @@ public class UserViewModel {
 
     public void setAdmin(boolean admin) {
         this.admin = admin;
+    }
+
+    public boolean isProducer() {
+        return producer;
+    }
+
+    public void setProducer(boolean producer) {
+        this.producer = producer;
     }
 
 }

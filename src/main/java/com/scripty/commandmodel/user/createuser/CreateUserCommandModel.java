@@ -20,6 +20,7 @@ public class CreateUserCommandModel {
     @Size(max = 50, message = "Team must be no more than 50 characters in length.")
     private String team;
     private boolean admin;
+    private boolean producer;
 
     public String getUsername() {
         return username;
@@ -67,5 +68,13 @@ public class CreateUserCommandModel {
 
     public void setAdmin(boolean admin) {
         this.admin = admin;
+    }
+
+    public boolean isProducer() {
+        return producer;
+    }
+
+    public void setProducer(boolean producer) {
+        this.producer = producer;
     }
 }
