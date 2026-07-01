@@ -23,14 +23,17 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final AuthorityRepository authorityRepository;
     private final PasswordEncoder passwordEncoder;
+    private final TeamSettingService teamSettingService;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository,
                            AuthorityRepository authorityRepository,
-                           PasswordEncoder passwordEncoder) {
+                           PasswordEncoder passwordEncoder,
+                           TeamSettingService teamSettingService) {
         this.userRepository = userRepository;
         this.authorityRepository = authorityRepository;
         this.passwordEncoder = passwordEncoder;
+        this.teamSettingService = teamSettingService;
     }
 
     @Override
@@ -108,6 +111,7 @@ public class UserServiceImpl implements UserService {
             userViewModels.add(uvm);
         }
         vm.setUsers(userViewModels);
+        vm.setTeamName(teamSettingService.getTeamName());
         return vm;
     }
 
