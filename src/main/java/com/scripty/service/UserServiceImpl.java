@@ -8,6 +8,7 @@ import com.scripty.repository.AuthorityRepository;
 import com.scripty.repository.UserRepository;
 import com.scripty.viewmodel.user.createuser.CreateUserViewModel;
 import com.scripty.viewmodel.user.edituser.EditUserViewModel;
+import com.scripty.viewmodel.user.accountprofile.AccountProfileViewModel;
 import com.scripty.viewmodel.user.userlist.UserListViewModel;
 import com.scripty.viewmodel.user.userlist.UserViewModel;
 import java.util.ArrayList;
@@ -60,6 +61,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User readByUsername(String username) {
+        User user = userRepository.findByUsername(username).orElse(null);
+        if (user != null) {
+            List<Authority> authorities = authorityRepository.findByUsername(user.getUsername());
+            user.setAdmin(authorities.stream().anyMatch(a -> "ROLE_ADMIN".equals(a.getAuthority())));
+        }
+        return user;
+    }
+
+    @Override
     @Transactional
     public void update(User user) {
         User existing = userRepository.findById(user.getId()).orElse(null);
@@ -68,6 +79,7 @@ public class UserServiceImpl implements UserService {
         existing.setEnabled(user.isEnabled());
         existing.setFirstName(user.getFirstName());
         existing.setLastName(user.getLastName());
+        existing.setTeam(user.getTeam());
         if (user.getPassword() != null && !user.getPassword().isEmpty()) {
             existing.setPassword(passwordEncoder.encode(user.getPassword()));
         }
@@ -111,6 +123,7 @@ public class UserServiceImpl implements UserService {
             uvm.setUsername(user.getUsername());
             uvm.setFirstName(user.getFirstName());
             uvm.setLastName(user.getLastName());
+            uvm.setTeam(user.getTeam());
             uvm.setEnabled(user.isEnabled());
             uvm.setAdmin(user.isAdmin());
             uvm.setProducer(user.isProducer());
@@ -137,6 +150,7 @@ public class UserServiceImpl implements UserService {
         commandModel.setUsername(user.getUsername());
         commandModel.setFirstName(user.getFirstName());
         commandModel.setLastName(user.getLastName());
+        commandModel.setTeam(user.getTeam());
         commandModel.setAdmin(user.isAdmin());
         commandModel.setProducer(user.isProducer());
         vm.setEditUserCommandModel(commandModel);
@@ -150,6 +164,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(cmd.getPassword());
         user.setFirstName(cmd.getFirstName());
         user.setLastName(cmd.getLastName());
+        user.setTeam(cmd.getTeam());
         user.setEnabled(true);
         user.setAdmin(cmd.isAdmin());
         user.setProducer(cmd.isProducer());
@@ -163,6 +178,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(cmd.getPassword());
         user.setFirstName(cmd.getFirstName());
         user.setLastName(cmd.getLastName());
+        user.setTeam(cmd.getTeam());
         user.setAdmin(cmd.isAdmin());
         user.setProducer(cmd.isProducer());
         update(user);
@@ -175,5 +191,19 @@ public class UserServiceImpl implements UserService {
         User user = read(id);
         delete(user);
         return user;
+    }
+
+    @Override
+    public AccountProfileViewModel getAccountProfileViewModel(Integer id) {
+        User user = read(id);
+        AccountProfileViewModel vm = new AccountProfileViewModel();
+        vm.setId(user.getId());
+        vm.setUsername(user.getUsername());
+        vm.setFirstName(user.getFirstName());
+        vm.setLastName(user.getLastName());
+        vm.setTeam(user.getTeam());
+        vm.setEnabled(user.isEnabled());
+        vm.setAdmin(user.isAdmin());
+        return vm;
     }
 }
