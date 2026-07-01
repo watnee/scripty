@@ -7,7 +7,7 @@ public class UserViewModel {
     private String firstName;
     private String lastName;
     private boolean enabled;
-    private boolean admin;
+    private String accountType;
 
     public int getId() {
         return id;
@@ -49,12 +49,12 @@ public class UserViewModel {
         this.enabled = enabled;
     }
 
-    public boolean isAdmin() {
-        return admin;
+    public String getAccountType() {
+        return accountType;
     }
 
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
     }
 
 }

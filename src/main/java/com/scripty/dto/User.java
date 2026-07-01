@@ -32,7 +32,7 @@ public class User {
     private String lastName;
 
     @Transient
-    private boolean admin;
+    private String accountType = "USER";
 
     public Integer getId() {
         return id;
@@ -82,11 +82,19 @@ public class User {
         this.lastName = lastName;
     }
 
-    public boolean isAdmin() {
-        return admin;
+    public String getAccountType() {
+        return accountType;
     }
 
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
+    }
+
+    public boolean isAdmin() {
+        return "ADMIN".equals(accountType);
+    }
+
+    public boolean isWriter() {
+        return "WRITER".equals(accountType);
     }
 }

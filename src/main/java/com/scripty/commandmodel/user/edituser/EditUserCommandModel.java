@@ -18,7 +18,7 @@ public class EditUserCommandModel {
     @NotBlank(message = "You must supply a value for Last Name.")
     @Size(max = 30, message = "Last Name must be no more than 30 characters in length.")
     private String lastName;
-    private boolean admin;
+    private String accountType = "USER";
 
     public Integer getId() {
         return id;
@@ -60,11 +60,11 @@ public class EditUserCommandModel {
         this.lastName = lastName;
     }
 
-    public boolean isAdmin() {
-        return admin;
+    public String getAccountType() {
+        return accountType;
     }
 
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
     }
 }

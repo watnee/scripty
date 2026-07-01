@@ -39,6 +39,9 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         User saved = userRepository.save(user);
         authorityRepository.save(new Authority(user.getUsername(), "ROLE_USER"));
+        if (user.isWriter()) {
+            authorityRepository.save(new Authority(user.getUsername(), "ROLE_WRITER"));
+        }
         if (user.isAdmin()) {
             authorityRepository.save(new Authority(user.getUsername(), "ROLE_ADMIN"));
         }
@@ -50,7 +53,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(id).orElse(null);
         if (user != null) {
             List<Authority> authorities = authorityRepository.findByUsername(user.getUsername());
-            user.setAdmin(authorities.stream().anyMatch(a -> "ROLE_ADMIN".equals(a.getAuthority())));
+            user.setAccountType(resolveAccountType(authorities));
         }
         return user;
     }
@@ -70,6 +73,9 @@ public class UserServiceImpl implements UserService {
         userRepository.save(existing);
         authorityRepository.deleteByUsername(user.getUsername());
         authorityRepository.save(new Authority(user.getUsername(), "ROLE_USER"));
+        if (user.isWriter()) {
+            authorityRepository.save(new Authority(user.getUsername(), "ROLE_WRITER"));
+        }
         if (user.isAdmin()) {
             authorityRepository.save(new Authority(user.getUsername(), "ROLE_ADMIN"));
         }
@@ -87,7 +93,7 @@ public class UserServiceImpl implements UserService {
         List<User> users = userRepository.findAllByOrderByUsernameAsc();
         for (User user : users) {
             List<Authority> authorities = authorityRepository.findByUsername(user.getUsername());
-            user.setAdmin(authorities.stream().anyMatch(a -> "ROLE_ADMIN".equals(a.getAuthority())));
+            user.setAccountType(resolveAccountType(authorities));
         }
         return users;
     }
@@ -104,7 +110,7 @@ public class UserServiceImpl implements UserService {
             uvm.setFirstName(user.getFirstName());
             uvm.setLastName(user.getLastName());
             uvm.setEnabled(user.isEnabled());
-            uvm.setAdmin(user.isAdmin());
+            uvm.setAccountType(user.getAccountType());
             userViewModels.add(uvm);
         }
         vm.setUsers(userViewModels);
@@ -128,7 +134,7 @@ public class UserServiceImpl implements UserService {
         commandModel.setUsername(user.getUsername());
         commandModel.setFirstName(user.getFirstName());
         commandModel.setLastName(user.getLastName());
-        commandModel.setAdmin(user.isAdmin());
+        commandModel.setAccountType(user.getAccountType());
         vm.setEditUserCommandModel(commandModel);
         return vm;
     }
@@ -141,7 +147,7 @@ public class UserServiceImpl implements UserService {
         user.setFirstName(cmd.getFirstName());
         user.setLastName(cmd.getLastName());
         user.setEnabled(true);
-        user.setAdmin(cmd.isAdmin());
+        user.setAccountType(cmd.getAccountType());
         return create(user);
     }
 
@@ -152,7 +158,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(cmd.getPassword());
         user.setFirstName(cmd.getFirstName());
         user.setLastName(cmd.getLastName());
-        user.setAdmin(cmd.isAdmin());
+        user.setAccountType(cmd.getAccountType());
         update(user);
         return user;
     }
@@ -163,5 +169,15 @@ public class UserServiceImpl implements UserService {
         User user = read(id);
         delete(user);
         return user;
+    }
+
+    private String resolveAccountType(List<Authority> authorities) {
+        if (authorities.stream().anyMatch(a -> "ROLE_ADMIN".equals(a.getAuthority()))) {
+            return "ADMIN";
+        }
+        if (authorities.stream().anyMatch(a -> "ROLE_WRITER".equals(a.getAuthority()))) {
+            return "WRITER";
+        }
+        return "USER";
     }
 }

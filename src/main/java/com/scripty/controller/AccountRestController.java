@@ -44,7 +44,7 @@ public class AccountRestController {
         response.put("username", user.getUsername());
         response.put("firstName", user.getFirstName());
         response.put("lastName", user.getLastName());
-        response.put("admin", user.isAdmin());
+        response.put("accountType", user.getAccountType());
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
@@ -60,7 +60,7 @@ public class AccountRestController {
         response.put("username", user.getUsername());
         response.put("firstName", user.getFirstName());
         response.put("lastName", user.getLastName());
-        response.put("admin", user.isAdmin());
+        response.put("accountType", user.getAccountType());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
