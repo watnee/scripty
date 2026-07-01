@@ -21,7 +21,11 @@ public class EditUserCommandModel {
     @Size(max = 50, message = "Team must be no more than 50 characters in length.")
     private String team;
     private boolean admin;
+<<<<<<< HEAD
+    private boolean director;
+=======
     private boolean producer;
+>>>>>>> origin/master
 
     public Integer getId() {
         return id;
@@ -79,11 +83,20 @@ public class EditUserCommandModel {
         this.admin = admin;
     }
 
+<<<<<<< HEAD
+    public boolean isDirector() {
+        return director;
+    }
+
+    public void setDirector(boolean director) {
+        this.director = director;
+=======
     public boolean isProducer() {
         return producer;
     }
 
     public void setProducer(boolean producer) {
         this.producer = producer;
+>>>>>>> origin/master
     }
 }

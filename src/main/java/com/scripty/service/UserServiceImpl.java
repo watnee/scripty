@@ -43,8 +43,13 @@ public class UserServiceImpl implements UserService {
         if (user.isAdmin()) {
             authorityRepository.save(new Authority(user.getUsername(), "ROLE_ADMIN"));
         }
+<<<<<<< HEAD
+        if (user.isDirector()) {
+            authorityRepository.save(new Authority(user.getUsername(), "ROLE_DIRECTOR"));
+=======
         if (user.isProducer()) {
             authorityRepository.save(new Authority(user.getUsername(), "ROLE_PRODUCER"));
+>>>>>>> origin/master
         }
         return saved;
     }
@@ -55,6 +60,9 @@ public class UserServiceImpl implements UserService {
         if (user != null) {
             List<Authority> authorities = authorityRepository.findByUsername(user.getUsername());
             user.setAdmin(authorities.stream().anyMatch(a -> "ROLE_ADMIN".equals(a.getAuthority())));
+<<<<<<< HEAD
+            user.setDirector(authorities.stream().anyMatch(a -> "ROLE_DIRECTOR".equals(a.getAuthority())));
+=======
             user.setProducer(authorities.stream().anyMatch(a -> "ROLE_PRODUCER".equals(a.getAuthority())));
         }
         return user;
@@ -66,6 +74,7 @@ public class UserServiceImpl implements UserService {
         if (user != null) {
             List<Authority> authorities = authorityRepository.findByUsername(user.getUsername());
             user.setAdmin(authorities.stream().anyMatch(a -> "ROLE_ADMIN".equals(a.getAuthority())));
+>>>>>>> origin/master
         }
         return user;
     }
@@ -89,8 +98,13 @@ public class UserServiceImpl implements UserService {
         if (user.isAdmin()) {
             authorityRepository.save(new Authority(user.getUsername(), "ROLE_ADMIN"));
         }
+<<<<<<< HEAD
+        if (user.isDirector()) {
+            authorityRepository.save(new Authority(user.getUsername(), "ROLE_DIRECTOR"));
+=======
         if (user.isProducer()) {
             authorityRepository.save(new Authority(user.getUsername(), "ROLE_PRODUCER"));
+>>>>>>> origin/master
         }
     }
 
@@ -107,7 +121,11 @@ public class UserServiceImpl implements UserService {
         for (User user : users) {
             List<Authority> authorities = authorityRepository.findByUsername(user.getUsername());
             user.setAdmin(authorities.stream().anyMatch(a -> "ROLE_ADMIN".equals(a.getAuthority())));
+<<<<<<< HEAD
+            user.setDirector(authorities.stream().anyMatch(a -> "ROLE_DIRECTOR".equals(a.getAuthority())));
+=======
             user.setProducer(authorities.stream().anyMatch(a -> "ROLE_PRODUCER".equals(a.getAuthority())));
+>>>>>>> origin/master
         }
         return users;
     }
@@ -126,7 +144,11 @@ public class UserServiceImpl implements UserService {
             uvm.setTeam(user.getTeam());
             uvm.setEnabled(user.isEnabled());
             uvm.setAdmin(user.isAdmin());
+<<<<<<< HEAD
+            uvm.setDirector(user.isDirector());
+=======
             uvm.setProducer(user.isProducer());
+>>>>>>> origin/master
             userViewModels.add(uvm);
         }
         vm.setUsers(userViewModels);
@@ -152,7 +174,11 @@ public class UserServiceImpl implements UserService {
         commandModel.setLastName(user.getLastName());
         commandModel.setTeam(user.getTeam());
         commandModel.setAdmin(user.isAdmin());
+<<<<<<< HEAD
+        commandModel.setDirector(user.isDirector());
+=======
         commandModel.setProducer(user.isProducer());
+>>>>>>> origin/master
         vm.setEditUserCommandModel(commandModel);
         return vm;
     }
@@ -167,7 +193,11 @@ public class UserServiceImpl implements UserService {
         user.setTeam(cmd.getTeam());
         user.setEnabled(true);
         user.setAdmin(cmd.isAdmin());
+<<<<<<< HEAD
+        user.setDirector(cmd.isDirector());
+=======
         user.setProducer(cmd.isProducer());
+>>>>>>> origin/master
         return create(user);
     }
 
@@ -180,7 +210,11 @@ public class UserServiceImpl implements UserService {
         user.setLastName(cmd.getLastName());
         user.setTeam(cmd.getTeam());
         user.setAdmin(cmd.isAdmin());
+<<<<<<< HEAD
+        user.setDirector(cmd.isDirector());
+=======
         user.setProducer(cmd.isProducer());
+>>>>>>> origin/master
         update(user);
         return user;
     }
