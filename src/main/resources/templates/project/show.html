@@ -23,7 +23,7 @@
                 <h2>Scenes <small><a th:href="@{/scene/all(projectId=${viewModel.id})}" role="button">View All</a></small></h2>
                 <th:block th:each="scene : ${viewModel.scenes}">
                     <h3 style="text-transform: uppercase; margin-bottom: 0.25em">
-                        <a th:href="@{/scene/show(id=${scene.id})}" style="color: inherit; text-decoration: none" th:text="${#strings.isEmpty(scene.name) || #strings.isEmpty(scene.name.trim())} ? 'Untitled Scene' : ${scene.name}"></a>
+                        <a th:href="@{/scene/show(id=${scene.id})}" style="color: inherit; text-decoration: none"><th:block th:if="${not #strings.isEmpty(scene.label)}" th:text="${scene.label + ' '}"></th:block><th:block th:text="${#strings.isEmpty(scene.name) || #strings.isEmpty(scene.name.trim())} ? 'Untitled Scene' : ${scene.name}"></th:block></a>
                     </h3>
                     <table class="table-blocks-all" th:id="'table-blocks-' + ${scene.id}">
                         <tr th:each="block : ${scene.blocks}" draggable="true" th:attr="data-block-id=${block.id},data-block-order=${block.order}">
@@ -32,6 +32,7 @@
                                 <span class="drag-handle">&#8942;&#8942;</span>
                             </td>
                             <td class="block-content" th:attr="hx-get=@{/block/editInline(id=${block.id})}" hx-trigger="click[!event.target.closest('a')&amp;&amp;!event.target.closest('form')]" hx-swap="innerHTML" style="cursor: pointer">
+                                <p th:if="${not #strings.isEmpty(block.label)}" style="margin-bottom: 0; text-align: center; font-size: 0.75em; color: #888; text-transform: uppercase; letter-spacing: 0.1em" th:text="${block.label}"></p>
                                 <p th:if="${not #strings.isEmpty(block.personName)}" style="margin-bottom: 0; text-align: center">
                                     <a th:href="@{/character/show(id=${block.personId})}" class="character-name" style="text-transform: uppercase" th:text="${block.personName}"></a>
                                 </p>

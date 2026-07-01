@@ -24,6 +24,9 @@ public class Block {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
+    @Column(length = 30)
+    private String label;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "person_id")
     private Person person;
@@ -54,6 +57,14 @@ public class Block {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     public Person getPerson() {

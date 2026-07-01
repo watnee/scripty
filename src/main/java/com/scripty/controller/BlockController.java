@@ -192,11 +192,12 @@ public class BlockController {
     }
 
     @RequestMapping(value = "/createInline", method = RequestMethod.POST)
-    public String saveCreateInline(@RequestParam Integer sceneId, @RequestParam String content, @RequestParam(required = false) Integer personId, Model model) {
+    public String saveCreateInline(@RequestParam Integer sceneId, @RequestParam String content, @RequestParam(required = false) Integer personId, @RequestParam(required = false) String label, Model model) {
         CreateBlockCommandModel commandModel = new CreateBlockCommandModel();
         commandModel.setSceneId(sceneId);
         commandModel.setContent(content);
         commandModel.setPersonId(personId);
+        commandModel.setLabel(label);
         Block block = blockService.saveCreateBlockCommandModel(commandModel);
         BlockViewModel vm = blockService.getBlockViewModel(block.getId());
         model.addAttribute("block", vm);
@@ -215,11 +216,12 @@ public class BlockController {
     }
 
     @RequestMapping(value = "/createBelowInline", method = RequestMethod.POST)
-    public String saveCreateBelowInline(@RequestParam Integer id, @RequestParam String content, @RequestParam(required = false) Integer personId, Model model) {
+    public String saveCreateBelowInline(@RequestParam Integer id, @RequestParam String content, @RequestParam(required = false) Integer personId, @RequestParam(required = false) String label, Model model) {
         CreateBlockBelowCommandModel commandModel = new CreateBlockBelowCommandModel();
         commandModel.setId(id);
         commandModel.setContent(content);
         commandModel.setPersonId(personId);
+        commandModel.setLabel(label);
         Block block = blockService.saveCreateBlockBelowCommandModel(commandModel);
         BlockViewModel vm = blockService.getBlockViewModel(block.getId());
         model.addAttribute("block", vm);

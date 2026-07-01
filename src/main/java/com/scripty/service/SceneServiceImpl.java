@@ -67,6 +67,7 @@ public class SceneServiceImpl implements SceneService {
 
         vm.setId(scene.getId());
         vm.setName(scene.getName());
+        vm.setLabel(scene.getLabel());
 
         if (project != null) {
             vm.setProjectId(project.getId());
@@ -89,6 +90,7 @@ public class SceneServiceImpl implements SceneService {
             bvm.setId(block.getId());
             bvm.setOrder(block.getOrder());
             bvm.setContent(block.getContent());
+            bvm.setLabel(block.getLabel());
             if (block.getPerson() != null) {
                 Person person = personRepository.findById(block.getPerson().getId()).orElse(null);
                 if (person != null) {
@@ -153,6 +155,7 @@ public class SceneServiceImpl implements SceneService {
         EditSceneCommandModel commandModel = new EditSceneCommandModel();
         commandModel.setId(scene.getId());
         commandModel.setName(scene.getName());
+        commandModel.setLabel(scene.getLabel());
         commandModel.setProjectId(project.getId());
         vm.setEditSceneCommandModel(commandModel);
         return vm;
@@ -164,6 +167,7 @@ public class SceneServiceImpl implements SceneService {
         Scene scene = new Scene();
         Project project = projectRepository.findById(cmd.getProjectId()).orElse(null);
         scene.setName(cmd.getName());
+        scene.setLabel(cmd.getLabel());
         if (project != null) {
             scene.setProject(project);
         }
@@ -180,6 +184,7 @@ public class SceneServiceImpl implements SceneService {
 
         Scene scene = new Scene();
         scene.setName(cmd.getName());
+        scene.setLabel(cmd.getLabel());
         scene.setProject(project);
         scene.setOrder(existingScene.getOrder());
 
@@ -194,6 +199,7 @@ public class SceneServiceImpl implements SceneService {
         Scene scene = sceneRepository.findById(cmd.getId()).orElse(null);
         Project project = projectRepository.findById(cmd.getProjectId()).orElse(null);
         scene.setName(cmd.getName());
+        scene.setLabel(cmd.getLabel());
         scene.setProject(project);
         sceneRepository.save(scene);
         return scene;

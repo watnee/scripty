@@ -102,6 +102,7 @@ public class BlockServiceImpl implements BlockService {
         EditBlockCommandModel commandModel = new EditBlockCommandModel();
         commandModel.setId(existingBlock.getId());
         commandModel.setContent(existingBlock.getContent());
+        commandModel.setLabel(existingBlock.getLabel());
         if (existingBlock.getPerson() != null) {
             commandModel.setPersonId(existingBlock.getPerson().getId());
         }
@@ -117,6 +118,7 @@ public class BlockServiceImpl implements BlockService {
         vm.setId(block.getId());
         vm.setOrder(block.getOrder());
         vm.setContent(block.getContent());
+        vm.setLabel(block.getLabel());
         if (block.getPerson() != null) {
             Person person = personRepository.findById(block.getPerson().getId()).orElse(null);
             if (person != null) {
@@ -148,6 +150,7 @@ public class BlockServiceImpl implements BlockService {
         }
 
         block.setContent(content);
+        block.setLabel(cmd.getLabel());
         if (person != null) block.setPerson(person);
         block.setScene(scene);
 
@@ -178,6 +181,7 @@ public class BlockServiceImpl implements BlockService {
 
         Block block = new Block();
         block.setContent(content);
+        block.setLabel(cmd.getLabel());
         if (person != null) block.setPerson(person);
         block.setScene(scene);
 
@@ -208,6 +212,7 @@ public class BlockServiceImpl implements BlockService {
         }
 
         block.setContent(content);
+        block.setLabel(cmd.getLabel());
         block.setPerson(person);
         block.setScene(scene);
         blockRepository.save(block);

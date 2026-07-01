@@ -16,6 +16,15 @@
             <input type="hidden" th:field="*{id}" />
             <input type="hidden" th:field="*{projectId}" />
             <label>
+                Label
+                <select th:field="*{label}">
+                    <option value="">— none —</option>
+                    <option value="INT.">INT.</option>
+                    <option value="EXT.">EXT.</option>
+                    <option value="INT./EXT.">INT./EXT.</option>
+                </select>
+            </label>
+            <label>
                 Name
                 <input type="text" spellcheck="true" th:field="*{name}" />
                 <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>

@@ -14,6 +14,7 @@ public class BlockViewModel {
     private int id;
     private int order;
     private String content;
+    private String label;
     private int personId;
     private String personName;
 
@@ -39,6 +40,14 @@ public class BlockViewModel {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     public int getPersonId() {

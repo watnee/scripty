@@ -24,6 +24,9 @@ public class Scene {
     @Column(nullable = false)
     private String name;
 
+    @Column(length = 20)
+    private String label;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id")
     private Project project;
@@ -50,6 +53,14 @@ public class Scene {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     public Project getProject() {

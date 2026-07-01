@@ -17,7 +17,9 @@ public class CreateSceneCommandModel {
     @NotBlank(message = "You must supply a value for Name.")
     @Size(max = 255, message = "Name must be no more than 255 characters in length.")
     private String name;
-    
+
+    private String label;
+
     private Integer projectId;
 
     public String getName() {
@@ -26,6 +28,14 @@ public class CreateSceneCommandModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     public Integer getProjectId() {

@@ -20,6 +20,17 @@
                 <button type="button" id="redo-btn" onclick="document.querySelector('textarea[name=content]').focus(); document.execCommand('redo')">Redo &#8594;</button>
             </p>
             <label>
+                Label
+                <select th:field="*{label}">
+                    <option value="">— none —</option>
+                    <option value="ACTION">Action</option>
+                    <option value="DIALOGUE">Dialogue</option>
+                    <option value="PARENTHETICAL">Parenthetical</option>
+                    <option value="TRANSITION">Transition</option>
+                    <option value="SHOT">Shot</option>
+                </select>
+            </label>
+            <label>
                 Content
                 <textarea spellcheck="true" rows="1" cols="30" th:field="*{content}"></textarea>
                 <span th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></span>

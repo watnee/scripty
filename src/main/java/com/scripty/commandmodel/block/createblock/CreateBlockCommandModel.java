@@ -16,6 +16,7 @@ public class CreateBlockCommandModel {
     @NotBlank(message = "You must supply a value for Content.")
     private String content;
     
+    private String label;
     private Integer personId;
     private Integer sceneId;
 
@@ -25,6 +26,14 @@ public class CreateBlockCommandModel {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     public Integer getPersonId() {

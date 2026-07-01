@@ -82,6 +82,7 @@ public class ProjectServiceImpl implements ProjectService {
             SceneViewModel svm = new SceneViewModel();
             svm.setId(scene.getId());
             svm.setName(scene.getName());
+            svm.setLabel(scene.getLabel());
             List<Block> blocks = blockRepository.findBySceneIdOrderByOrderAsc(scene.getId());
             List<BlockViewModel> blockViewModels = new ArrayList<>();
             for (Block block : blocks) {
@@ -89,6 +90,7 @@ public class ProjectServiceImpl implements ProjectService {
                 bvm.setId(block.getId());
                 bvm.setOrder(block.getOrder());
                 bvm.setContent(block.getContent());
+                bvm.setLabel(block.getLabel());
                 if (block.getPerson() != null) {
                     Person person = personRepository.findById(block.getPerson().getId()).orElse(null);
                     if (person != null) {

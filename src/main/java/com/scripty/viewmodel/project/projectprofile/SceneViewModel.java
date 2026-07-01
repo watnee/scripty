@@ -16,6 +16,7 @@ public class SceneViewModel {
 
     private int id;
     private String name;
+    private String label;
     private List<BlockViewModel> blocks;
 
     public int getId() {
@@ -32,6 +33,14 @@ public class SceneViewModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     public List<BlockViewModel> getBlocks() {
