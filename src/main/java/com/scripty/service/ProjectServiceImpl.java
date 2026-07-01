@@ -68,6 +68,21 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    public ProjectListViewModel getProjectListViewModel(String username) {
+        ProjectListViewModel vm = new ProjectListViewModel();
+        List<Project> projects = projectRepository.findByTeamMemberUsername(username);
+        List<ProjectViewModel> projectViewModels = new ArrayList<>();
+        for (Project project : projects) {
+            ProjectViewModel pvm = new ProjectViewModel();
+            pvm.setId(project.getId());
+            pvm.setTitle(project.getTitle());
+            projectViewModels.add(pvm);
+        }
+        vm.setProjects(projectViewModels);
+        return vm;
+    }
+
+    @Override
     public ProjectProfileViewModel getProjectProfileViewModel(Integer id) {
         ProjectProfileViewModel vm = new ProjectProfileViewModel();
         Project project = projectRepository.findById(id).orElse(null);

@@ -5,7 +5,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "project")
@@ -32,5 +35,16 @@ public class Project {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    @ManyToMany(mappedBy = "projects")
+    private Set<Team> teams = new HashSet<>();
+
+    public Set<Team> getTeams() {
+        return teams;
+    }
+
+    public void setTeams(Set<Team> teams) {
+        this.teams = teams;
     }
 }

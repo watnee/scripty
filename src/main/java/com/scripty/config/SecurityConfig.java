@@ -20,7 +20,7 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/favicon.ico", "/css/**", "/js/**", "/fonts/**", "/login").permitAll()
-                .requestMatchers("/api/account/**", "/account/**").hasRole("ADMIN")
+                .requestMatchers("/api/account/**", "/account/**", "/api/team/**", "/team/**").hasRole("ADMIN")
                 .requestMatchers("/project/**", "/actor/**", "/scene/**", "/block/**", "/character/**").hasRole("USER")
                 .anyRequest().permitAll()
             )

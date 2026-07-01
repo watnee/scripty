@@ -16,8 +16,11 @@ import com.scripty.commandmodel.scene.createscene.CreateSceneCommandModel;
 import com.scripty.dto.Scene;
 import com.scripty.service.ProjectService;
 import com.scripty.service.SceneService;
+import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import jakarta.validation.Valid;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -41,12 +44,14 @@ public class ProjectController {
     SceneService sceneService;
     
     @RequestMapping(value = "/list")
-    public String list(Model model) {
-
-        ProjectListViewModel viewModel = projectService.getProjectListViewModel();
-
+    public String list(Model model, Authentication authentication) {
+        ProjectListViewModel viewModel;
+        if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+            viewModel = projectService.getProjectListViewModel();
+        } else {
+            viewModel = projectService.getProjectListViewModel(authentication.getName());
+        }
         model.addAttribute("viewModel", viewModel);
-
         return "project/list";
     }
     

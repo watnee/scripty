@@ -5,8 +5,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "`user`")
@@ -30,6 +33,9 @@ public class User {
 
     @Column(name = "last_name", nullable = false, length = 30)
     private String lastName;
+
+    @ManyToMany(mappedBy = "members")
+    private Set<Team> teams = new HashSet<>();
 
     @Transient
     private boolean admin;
@@ -80,6 +86,14 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public Set<Team> getTeams() {
+        return teams;
+    }
+
+    public void setTeams(Set<Team> teams) {
+        this.teams = teams;
     }
 
     public boolean isAdmin() {

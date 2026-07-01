@@ -2,9 +2,9 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "Scripty WebApp (Tomcat)",
-      "runtimeExecutable": "java",
-      "runtimeArgs": ["-jar", "target/dependency/webapp-runner.jar", "--port", "8080", "target/spring-mvc-railway-webapp.war"],
+      "name": "scripty",
+      "runtimeExecutable": "env",
+      "runtimeArgs": ["JAVA_HOME=/Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home", "mvn", "-f", "/Users/clintwatnee/Desktop/scripty/.claude/worktrees/romantic-davinci-c6224f/pom.xml", "spring-boot:run", "-Dspring-boot.run.arguments=--ADMIN_USERNAME=admin --ADMIN_PASSWORD=admin"],
       "port": 8080
     }
   ]
