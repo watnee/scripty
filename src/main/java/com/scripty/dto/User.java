@@ -37,6 +37,9 @@ public class User {
     @Transient
     private boolean admin;
 
+    @Transient
+    private boolean producer;
+
     public Integer getId() {
         return id;
     }
@@ -99,5 +102,13 @@ public class User {
 
     public void setAdmin(boolean admin) {
         this.admin = admin;
+    }
+
+    public boolean isProducer() {
+        return producer;
+    }
+
+    public void setProducer(boolean producer) {
+        this.producer = producer;
     }
 }

@@ -47,6 +47,7 @@ public class AccountRestController {
         response.put("lastName", user.getLastName());
         response.put("team", user.getTeam());
         response.put("admin", user.isAdmin());
+        response.put("producer", user.isProducer());
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
@@ -78,6 +79,7 @@ public class AccountRestController {
         response.put("lastName", user.getLastName());
         response.put("team", user.getTeam());
         response.put("admin", user.isAdmin());
+        response.put("producer", user.isProducer());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

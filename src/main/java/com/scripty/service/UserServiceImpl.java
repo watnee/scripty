@@ -43,6 +43,9 @@ public class UserServiceImpl implements UserService {
         if (user.isAdmin()) {
             authorityRepository.save(new Authority(user.getUsername(), "ROLE_ADMIN"));
         }
+        if (user.isProducer()) {
+            authorityRepository.save(new Authority(user.getUsername(), "ROLE_PRODUCER"));
+        }
         return saved;
     }
 
@@ -52,6 +55,7 @@ public class UserServiceImpl implements UserService {
         if (user != null) {
             List<Authority> authorities = authorityRepository.findByUsername(user.getUsername());
             user.setAdmin(authorities.stream().anyMatch(a -> "ROLE_ADMIN".equals(a.getAuthority())));
+            user.setProducer(authorities.stream().anyMatch(a -> "ROLE_PRODUCER".equals(a.getAuthority())));
         }
         return user;
     }
@@ -85,6 +89,9 @@ public class UserServiceImpl implements UserService {
         if (user.isAdmin()) {
             authorityRepository.save(new Authority(user.getUsername(), "ROLE_ADMIN"));
         }
+        if (user.isProducer()) {
+            authorityRepository.save(new Authority(user.getUsername(), "ROLE_PRODUCER"));
+        }
     }
 
     @Override
@@ -100,6 +107,7 @@ public class UserServiceImpl implements UserService {
         for (User user : users) {
             List<Authority> authorities = authorityRepository.findByUsername(user.getUsername());
             user.setAdmin(authorities.stream().anyMatch(a -> "ROLE_ADMIN".equals(a.getAuthority())));
+            user.setProducer(authorities.stream().anyMatch(a -> "ROLE_PRODUCER".equals(a.getAuthority())));
         }
         return users;
     }
@@ -118,6 +126,7 @@ public class UserServiceImpl implements UserService {
             uvm.setTeam(user.getTeam());
             uvm.setEnabled(user.isEnabled());
             uvm.setAdmin(user.isAdmin());
+            uvm.setProducer(user.isProducer());
             userViewModels.add(uvm);
         }
         vm.setUsers(userViewModels);
@@ -143,6 +152,7 @@ public class UserServiceImpl implements UserService {
         commandModel.setLastName(user.getLastName());
         commandModel.setTeam(user.getTeam());
         commandModel.setAdmin(user.isAdmin());
+        commandModel.setProducer(user.isProducer());
         vm.setEditUserCommandModel(commandModel);
         return vm;
     }
@@ -157,6 +167,7 @@ public class UserServiceImpl implements UserService {
         user.setTeam(cmd.getTeam());
         user.setEnabled(true);
         user.setAdmin(cmd.isAdmin());
+        user.setProducer(cmd.isProducer());
         return create(user);
     }
 
@@ -169,6 +180,7 @@ public class UserServiceImpl implements UserService {
         user.setLastName(cmd.getLastName());
         user.setTeam(cmd.getTeam());
         user.setAdmin(cmd.isAdmin());
+        user.setProducer(cmd.isProducer());
         update(user);
         return user;
     }
