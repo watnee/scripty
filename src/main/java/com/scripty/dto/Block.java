@@ -24,6 +24,9 @@ public class Block {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
+    @Column(name = "font")
+    private String font;
+
     @Column(nullable = false)
     private boolean bookmarked;
 
@@ -57,6 +60,14 @@ public class Block {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getFont() {
+        return font;
+    }
+
+    public void setFont(String font) {
+        this.font = font;
     }
 
     public Person getPerson() {

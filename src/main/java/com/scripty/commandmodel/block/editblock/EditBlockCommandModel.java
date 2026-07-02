@@ -20,6 +20,7 @@ public class EditBlockCommandModel {
     
     private Integer personId;
     private Integer sceneId;
+    private String font;
 
     public Integer getId() {
         return id;
@@ -51,6 +52,14 @@ public class EditBlockCommandModel {
 
     public void setSceneId(Integer sceneId) {
         this.sceneId = sceneId;
+    }
+
+    public String getFont() {
+        return font;
+    }
+
+    public void setFont(String font) {
+        this.font = font;
     }
     
 }

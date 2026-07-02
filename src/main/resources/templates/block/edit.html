@@ -32,6 +32,15 @@
                 </select>
                 <span th:if="${#fields.hasErrors('personId')}" th:errors="*{personId}"></span>
             </label>
+            <label>
+                Font
+                <select th:field="*{font}">
+                    <option value="">Default</option>
+                    <option value="COURIER_PRIME">Courier Prime</option>
+                    <option value="ARIAL">Arial</option>
+                    <option value="TIMES_NEW_ROMAN">Times New Roman</option>
+                </select>
+            </label>
             <p>
                 <a th:href="@{/scene/show(id=${viewModel.sceneId})}" role="button">Cancel</a>
                 <button type="submit">Submit</button>

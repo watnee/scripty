@@ -1,0 +1,2 @@
+ALTER TABLE `block`
+ADD COLUMN `font` VARCHAR(40) NULL;
